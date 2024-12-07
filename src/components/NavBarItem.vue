@@ -13,9 +13,14 @@ export default {
 </script>
 
 <style scoped>
-button{
+button {
     background: none;
     border: none;
-    cursor:pointer
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    justify-content: center;
 }
 </style>
