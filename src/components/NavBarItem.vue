@@ -1,7 +1,7 @@
 <template>
     <button>
         <img alt="Vue logo" class="logo" :src="imgSrc" :width="width" :height="height" />
-        <span class="">{{ text }}</span>
+        <span>{{ text }}</span>
     </button>
 </template>
 
@@ -16,9 +16,6 @@ export default {
 button{
     background: none;
     border: none;
-}
-img {
-    display: block;
-    fill: blue;
+    cursor:pointer
 }
 </style>
