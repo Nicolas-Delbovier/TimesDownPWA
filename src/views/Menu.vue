@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Time's Down</h1>
-        <NavBar height="50" width="50"/>
+        <NavBar height="50" width="50" />
     </div>
 </template>
 
@@ -18,4 +18,7 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+    text-align: center;
+}
 </style>
