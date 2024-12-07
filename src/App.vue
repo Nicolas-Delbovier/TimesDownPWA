@@ -1,11 +1,10 @@
 <script setup>
 // import { RouterLink, RouterView } from 'vue-router'
-import NavBar from './views/NavBar.vue'
+import Menu from './views/Menu.vue'
 </script>
 
 <template>
-  <h1>Time's Down</h1>
-  <NavBar></NavBar>
+  <Menu></Menu>
 </template>
 
 <style scoped>
