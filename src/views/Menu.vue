@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Time's Down</h1>
-        <NavBar />
+        <NavBar height="50" width="50"/>
     </div>
 </template>
 
@@ -18,5 +18,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

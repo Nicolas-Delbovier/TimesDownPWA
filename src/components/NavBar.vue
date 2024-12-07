@@ -1,9 +1,9 @@
 <template>
 
     <div class="navbar-container">
-        <NavBarItem imgSrc="../src/assets/gameController.svg" width="50" height="50" text="Jouer" />
-        <NavBarItem imgSrc="../src/assets/newPage.svg" width="50" height="50" text="Thèmes" />
-        <NavBarItem imgSrc="../src/assets/add.svg" width="50" height="50" text="créer" />
+        <NavBarItem imgSrc="../src/assets/gameController.svg" :width="width" :height="height" text="Jouer" />
+        <NavBarItem imgSrc="../src/assets/newPage.svg" :width="width" :height="height" text="Thèmes" />
+        <NavBarItem imgSrc="../src/assets/add.svg" :width="width" :height="height" text="créer" />
     </div>
 
 </template>
@@ -14,7 +14,8 @@ import NavBarItem from './NavBarItem.vue'
 export default {
     components: {
         NavBarItem
-    }
+    },
+    props: ['width', 'height']
 }
 </script>
 
