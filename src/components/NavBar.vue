@@ -22,10 +22,10 @@ export default {
 .navbar-container{
     position: sticky;
     bottom:0;
-    border-radius: 5%;
+    border-radius: 50px;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
     padding: 20px;
-    margin: 20px auto;
+    margin: 20px 2vw;
     display: flex;
     justify-content: space-between;
 }
