@@ -1,9 +1,9 @@
 <template>
     <div id="menu">
         <h1>Time's Down</h1>
-        <Play v-if="contentView === 'play'" class="content"/>
-        <ThemesSelection v-if="contentView === 'themes'" class="content"/>
-        <Modifications v-if="contentView === 'modifications'" class="content"/>
+        <Play v-if="contentView === 'play'" class="content" />
+        <ThemesSelection v-if="contentView === 'themes'" :cards="cards" class="content" />
+        <Modifications v-if="contentView === 'modifications'" class="content" />
         <NavBar @menuViewChange="changeMenuView" class="nav" height="50" width="50" />
     </div>
 </template>
@@ -15,10 +15,13 @@ import ThemesSelection from './ThemesSelection.vue';
 import Modifications from './Modifications.vue';
 import Play from './Play.vue';
 
+import jsonData from '../../data/data.json';
+
 export default {
-    data(){
-        return{
-            contentView: 'play'
+    data() {
+        return {
+            contentView: 'play',
+            cards: jsonData
         };
     },
     components: {
@@ -28,27 +31,30 @@ export default {
         Modifications
     },
     methods: {
-        changeMenuView(message){
-            this.contentView=message;
+        changeMenuView(message) {
+            this.contentView = message;
         }
-    }
+    },
 
 }
 </script>
 
 <style scoped>
-#menu{
+#menu {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.content{
+
+.content {
     height: 60vh;
     width: 90vw;
 }
-.nav{
+
+.nav {
     width: 90%
 }
+
 h1 {
     text-align: center;
 }

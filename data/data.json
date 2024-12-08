@@ -1,0 +1,66 @@
+{
+  "cards": [
+    {
+      "theme": "Base",
+      "words": [
+        "bonjour",
+        "merci",
+        "poire",
+        "cheval",
+        "oui",
+        "non",
+        "soeur",
+        "bien",
+        "mal",
+        "heureux",
+        "triste",
+        "amour",
+        "amitié",
+        "famille",
+        "maison",
+        "école",
+        "travail",
+        "voiture",
+        "vélo",
+        "train",
+        "avion",
+        "bateau",
+        "mer",
+        "montagne",
+        "rivière",
+        "forêt",
+        "arbre",
+        "fleur",
+        "soleil",
+        "lune",
+        "étoile",
+        "ciel",
+        "nuage",
+        "pluie",
+        "neige",
+        "vent",
+        "orage",
+        "foudre",
+        "feu",
+        "terre",
+        "eau",
+        "air",
+        "nourriture",
+        "boisson",
+        "pain",
+        "fromage",
+        "vin",
+        "bière",
+        "café",
+        "thé"
+      ]
+    },
+    {
+        "theme": "other",
+        "words":[
+            "Shrek",
+            "avion"
+        ]
+    }
+  ]
+}
