@@ -1,8 +1,10 @@
 <template>
     <div id="menu">
         <h1>Time's Down</h1>
-        <Modifications class="content"/>
-        <NavBar class="nav" height="50" width="50" />
+        <Play v-if="contentView === 'play'" class="content"/>
+        <ThemesSelection v-if="contentView === 'themes'" class="content"/>
+        <Modifications v-if="contentView === 'modifications'" class="content"/>
+        <NavBar @menuViewChange="changeMenuView" class="nav" height="50" width="50" />
     </div>
 </template>
 
@@ -14,11 +16,21 @@ import Modifications from './Modifications.vue';
 import Play from './Play.vue';
 
 export default {
+    data(){
+        return{
+            contentView: 'play'
+        };
+    },
     components: {
         NavBar,
         ThemesSelection,
         Play,
         Modifications
+    },
+    methods: {
+        changeMenuView(message){
+            this.contentView=message;
+        }
     }
 
 }
@@ -31,7 +43,7 @@ export default {
     align-items: center;
 }
 .content{
-    height: 70vh;
+    height: 60vh;
     width: 90vw;
 }
 .nav{

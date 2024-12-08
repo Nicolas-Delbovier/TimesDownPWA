@@ -1,9 +1,9 @@
 <template>
 
     <div class="navbar-container">
-        <NavBarItem imgSrc="../src/assets/gameController.svg" :width="width" :height="height" text="Jouer" />
-        <NavBarItem imgSrc="../src/assets/newPage.svg" :width="width" :height="height" text="Thèmes" />
-        <NavBarItem imgSrc="../src/assets/add.svg" :width="width" :height="height" text="Modifier" />
+        <NavBarItem @click="onClick('play')" imgSrc="../src/assets/gameController.svg" :width="width" :height="height" text="Jouer" />
+        <NavBarItem @click="onClick('themes')" imgSrc="../src/assets/newPage.svg" :width="width" :height="height" text="Thèmes" />
+        <NavBarItem @click="onClick('modifications')" imgSrc="../src/assets/add.svg" :width="width" :height="height" text="Modifier" />
     </div>
 
 </template>
@@ -15,7 +15,12 @@ export default {
     components: {
         NavBarItem
     },
-    props: ['width', 'height']
+    props: ['width', 'height'],
+    methods:{
+        onClick(menuView){
+            this.$emit('menuViewChange', menuView);
+        }
+    }
 }
 </script>
 
