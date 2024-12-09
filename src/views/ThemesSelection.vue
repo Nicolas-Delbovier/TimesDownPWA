@@ -1,13 +1,19 @@
 <template>
     <div id="main">
-        Theme selection
-        <span>{{ cards }}</span>
+        <h2>Sélection de thème</h2>
+        <div v-for="deck in decks" :key="deck['theme']">
+            <ThemeCard :theme="deck['theme']" :numberWords="deck['words'].length"></ThemeCard>
+        </div>
     </div>
 </template>
 
 <script>
+import ThemeCard from '@/components/ThemeCard.vue';
 export default {
-    props: ['cards']
+    props: ['decks'],
+    components:{
+        ThemeCard
+    }
 
 }
 </script>
