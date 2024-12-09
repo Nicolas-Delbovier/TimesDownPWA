@@ -2,7 +2,8 @@
     <div id="menu">
         <h1>Time's Down</h1>
         <Play v-if="contentView === 'play'" class="content" />
-        <ThemesSelection v-if="contentView === 'themes'" :cards="cards" class="content" />
+        <ThemesSelection @useTheme="updateSelectedThemes" v-if="contentView === 'themes'" :decks="cardsData['cards']"
+            class="content" />
         <Modifications v-if="contentView === 'modifications'" class="content" />
         <NavBar @menuViewChange="changeMenuView" class="nav" height="50" width="50" />
     </div>
@@ -21,7 +22,11 @@ export default {
     data() {
         return {
             contentView: 'play',
-            cards: jsonData
+            cardsData: jsonData,
+            selectedThemes: jsonData['cards'].map(x => x['theme']).reduce((acc, theme) => {
+                acc[theme] = true;
+                return acc
+            }, {})
         };
     },
     components: {
@@ -33,6 +38,10 @@ export default {
     methods: {
         changeMenuView(message) {
             this.contentView = message;
+        },
+        updateSelectedThemes(message){
+            this.selectedThemes[message['theme']] = message['use'];
+            console.log(this.selectedThemes);
         }
     },
 
