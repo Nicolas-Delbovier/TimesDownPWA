@@ -56,11 +56,20 @@
       ]
     },
     {
-        "theme": "other",
-        "words":[
-            "Shrek",
-            "avion"
-        ]
+      "theme": "Other",
+      "words": ["Shrek", "avion"]
+    },
+    {
+      "theme": "Other2",
+      "words": ["Shrek", "avion"]
+    },
+    {
+      "theme": "Other3",
+      "words": ["Shrek", "avion"]
+    },
+    {
+      "theme": "Other4",
+      "words": ["Shrek", "avion"]
     }
   ]
 }

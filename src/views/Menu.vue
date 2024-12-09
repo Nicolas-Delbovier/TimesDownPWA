@@ -49,6 +49,7 @@ export default {
 .content {
     height: 60vh;
     width: 90vw;
+    overflow-y: auto;
 }
 
 .nav {
