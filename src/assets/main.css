@@ -1,0 +1,10 @@
+/* In your main CSS file (e.g., styles.css) */
+:root {
+    --main-color: #183fdc;
+}
+
+.content {
+    height: 60vh;
+    width: 90vw;
+    overflow-y: auto;
+}

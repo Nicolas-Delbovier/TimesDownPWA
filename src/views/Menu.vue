@@ -1,6 +1,5 @@
 <template>
     <div id="menu">
-        <h1>Time's Down</h1>
         <Play @playButtonPressed="startGame" @updateNbCards="updateNbCards" v-if="contentView === 'play'" class="content" />
         <ThemesSelection @useTheme="updateSelectedThemes" v-if="contentView === 'themes'" :decks="cardsData"
             class="content" />
@@ -50,6 +49,7 @@ export default {
             allWords = allWords.slice(0, this.nbCardsToPlay);
             allWords = allWords.sort(() => 0.5 - Math.random())
             console.log(allWords)
+            this.$emit('startGame', allWords)
         },
         changeMenuView(message) {
             this.contentView = message;
@@ -70,17 +70,8 @@ export default {
     align-items: center;
 }
 
-.content {
-    height: 60vh;
-    width: 90vw;
-    overflow-y: auto;
-}
-
 .nav {
     width: 90%
 }
 
-h1 {
-    text-align: center;
-}
 </style>
