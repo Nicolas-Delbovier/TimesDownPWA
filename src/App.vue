@@ -6,12 +6,20 @@ import Game from './views/Game.vue'
 </script>
 
 <template>
-  <h1>Time's Down</h1>
-  <!-- <Menu @startGame="startGame"></Menu> -->
-  <Game></Game>
+  <div id="window">
+    <h1>Time's Down</h1>
+    <!-- <Menu @startGame="startGame"></Menu> -->
+    <Game></Game>
+  </div>
 </template>
 
 <style scoped>
+
+#window{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 h1 {
     text-align: center;
