@@ -1,8 +1,8 @@
 <template>
     <div id="menu">
         <h1>Time's Down</h1>
-        <Play v-if="contentView === 'play'" class="content" />
-        <ThemesSelection @useTheme="updateSelectedThemes" v-if="contentView === 'themes'" :decks="cardsData['cards']"
+        <Play @playButtonPressed="startGame" @updateNbCards="updateNbCards" v-if="contentView === 'play'" class="content" />
+        <ThemesSelection @useTheme="updateSelectedThemes" v-if="contentView === 'themes'" :decks="cardsData"
             class="content" />
         <Modifications v-if="contentView === 'modifications'" class="content" />
         <NavBar @menuViewChange="changeMenuView" class="nav" height="50" width="50" />
@@ -22,11 +22,12 @@ export default {
     data() {
         return {
             contentView: 'play',
-            cardsData: jsonData,
+            cardsData: jsonData['cards'],
             selectedThemes: jsonData['cards'].map(x => x['theme']).reduce((acc, theme) => {
                 acc[theme] = true;
                 return acc
-            }, {})
+            }, {}),
+            nbCardsToPlay: 30
         };
     },
     components: {
@@ -36,13 +37,27 @@ export default {
         Modifications
     },
     methods: {
+        updateNbCards(message){
+            this.nbCardsToPlay = message;
+        },
+        startGame(message) {
+            let allWords = [];
+            for (let  deck of this.cardsData){
+                if (this.selectedThemes[deck['theme']]) {
+                    allWords = allWords.concat(deck['words']);
+                }
+            }
+            allWords = allWords.slice(0, this.nbCardsToPlay);
+            allWords = allWords.sort(() => 0.5 - Math.random())
+            console.log(allWords)
+        },
         changeMenuView(message) {
             this.contentView = message;
         },
-        updateSelectedThemes(message){
+        updateSelectedThemes(message) {
             this.selectedThemes[message['theme']] = message['use'];
-            console.log(this.selectedThemes);
         }
+
     },
 
 }
