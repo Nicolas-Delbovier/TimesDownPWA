@@ -1,5 +1,5 @@
 <template>
-    <div class="content" id="play-content">
+    <div id="play-content">
         <span id="current-word">
             {{ currentWord }}
         </span>
@@ -21,26 +21,30 @@ export default {
 </script>
 
 <style scoped>
-#current-word{
+#current-word {
     padding: 20% 45%;
     font-size: 3rem;
+    flex-grow: 1;
 }
+
 #play-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: aqua;
     padding-bottom: 2vh;
+    height: 80%;
+    width: 95%;
 }
 
-#action-buttons{
+#action-buttons {
     display: flex;
     justify-content: center;
     width: 100%;
     gap: 5vw;
 }
 
-button{
+button {
     cursor: pointer;
     padding: 5vh 15vw;
 }
