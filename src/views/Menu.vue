@@ -1,6 +1,6 @@
 <template>
     <div id="menu">
-        <Play @playButtonPressed="startGame" @updateNbCards="updateNbCards" v-if="contentView === 'play'" class="content" />
+        <Play @playButtonPressed="startGame" @updateNbCards="updateNbCards" @updateNbTeams="updateNbTeams" v-if="contentView === 'play'" class="content" />
         <ThemesSelection @useTheme="updateSelectedThemes" v-if="contentView === 'themes'" :decks="cardsData"
             class="content" />
         <Modifications v-if="contentView === 'modifications'" class="content" />
@@ -26,7 +26,8 @@ export default {
                 acc[theme] = true;
                 return acc
             }, {}),
-            nbCardsToPlay: 30
+            nbCardsToPlay: 30,
+            nbTeams: 2
         };
     },
     components: {
@@ -39,6 +40,9 @@ export default {
         updateNbCards(message){
             this.nbCardsToPlay = message;
         },
+        updateNbTeams(message){
+            this.nbTeams = message;
+        },
         startGame(message) {
             let allWords = [];
             for (let  deck of this.cardsData){
@@ -49,7 +53,7 @@ export default {
             allWords = allWords.slice(0, this.nbCardsToPlay);
             allWords = allWords.sort(() => 0.5 - Math.random())
             console.log(allWords)
-            this.$emit('startGame', allWords)
+            this.$emit('startGame', {'words': allWords, 'nbTeams': this.nbTeams})
         },
         changeMenuView(message) {
             this.contentView = message;

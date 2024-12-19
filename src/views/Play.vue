@@ -7,9 +7,15 @@
             <button @click="updateNbCards(30)" class="button">30</button>
             <button @click="updateNbCards(45)" class="button">45</button>
         </div>
+        <div id="nbCardsTeamsButtons">
+            <h3>Nombre d'équipes</h3>
+            <button @click="updateNbTeams(2)" class="button">2</button>
+            <button @click="updateNbTeams(3)" class="button">3</button>
+            <button @click="updateNbTeams(4)" class="button">4</button>
+        </div>
 
         <button class="button" id="playButton" @click="emitPressPlayMessage">
-            Play
+            Jouer
         </button>
     </div>
 </template>
@@ -22,6 +28,9 @@ export default {
         },
         updateNbCards(number){
             this.$emit('updateNbCards', number)
+        },
+        updateNbTeams(number){
+            this.$emit('updateNbTeams', number)
         }
     },
 };
@@ -46,7 +55,7 @@ export default {
     margin: 5vh 5vw;
 }
 
-#nbCardsRadioButtons {
+#nbCardsRadioButtons, #nbCardsTeamsButtons {
     display: flex;
     flex-direction: column;
 }
