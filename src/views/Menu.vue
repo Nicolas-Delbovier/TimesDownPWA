@@ -52,7 +52,6 @@ export default {
             }
             allWords = allWords.slice(0, this.nbCardsToPlay);
             allWords = allWords.sort(() => 0.5 - Math.random())
-            console.log(allWords)
             this.$emit('startGame', {'words': allWords, 'nbTeams': this.nbTeams})
         },
         changeMenuView(message) {

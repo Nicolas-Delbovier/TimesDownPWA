@@ -10,7 +10,7 @@ import Game from './views/Game.vue'
   <div id="window">
     <h1>Time's Down</h1>
     <Menu v-if="state === 'menu'" @startGame="onStartGame"></Menu>
-    <Game v-if="state === 'game'"></Game>
+    <Game v-if="state === 'game'" :nbTeams="nbTeams" :words="words"></Game>
   </div>
 </template>
 
@@ -18,12 +18,16 @@ import Game from './views/Game.vue'
 export default {
   data() {
     return {
-      state: 'menu'
+      state: 'menu',
+      nbTeams: 2,
+      words: []
+
     }
   },
   methods: {
     onStartGame(message) {
-      console.log('game start', message)
+      this.nbTeams = message.nbTeams;
+      this.words = message.words;
       this.state = 'game';
     }
   }
