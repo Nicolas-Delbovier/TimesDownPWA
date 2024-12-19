@@ -9,19 +9,31 @@
         <span v-if="round === 3">Manche {{ round }}. Vous devez faire deviner le mot en utilisant des mimes uniquement.
             Une seule proposition par carte.</span>
         <span>Tour de l'équipe {{ currentTeam }}</span>
-        <button @click="() => this.state = 'inside-round'">Jouer</button>
+        <button @click="() => this.state = 'next-team'">Jouer</button>
     </div>
+
+    <div v-if="state === 'next-team'">
+        <span>Tour de l'équipe {{ currentTeam }}.</span>
+        <button @click="() => { startTimer(); this.state = 'inside-round' }">Jouer</button>
+    </div>
+
     <div v-if="state === 'inside-round'" id="play-content">
         <span id="current-word">
             {{ currentWords[currentWordIndex] }}
         </span>
+        <span>{{ remainingTime }} secondes</span>
         <div id="action-buttons"><button @click="skipWord">Passer</button><button @click="validateWord">Valider</button>
         </div>
+    </div>
+
+    <div v-if="state === 'scores'">Scores: {{ scores.slice(0, nbTeams) }} 
+        <button @click="backToMenu">Retour au menu</button>
     </div>
 </template>
 
 <script>
 export default {
+    emits: ['backToMenu'],
     props: ['nbTeams', 'words'],
     data() {
         return {
@@ -30,7 +42,9 @@ export default {
             currentWords: [...this.words], // words that are still in the deck for this round
             currentWordIndex: 0,
             currentTeam: 0, // index of the team currently playing
-            scores: [0, 0, 0, 0] // score of each Team
+            scores: [0, 0, 0, 0], // score of each Team
+            remainingTime: 30,
+            TIME: 30
         }
     },
     methods: {
@@ -39,13 +53,39 @@ export default {
             console.log(this.currentWords)
         },
         validateWord() {
+            this.scores[this.currentTeam] += 1;
             this.currentWords.shift(1)
             console.log(this.currentWords)
             if (this.currentWords.length === 0) {
                 this.currentWords = [...this.words];
                 this.state = 'inter-round';
                 this.round += 1;
+                this.remainingTime = this.TIME;
             }
+            if (this.round === 4){
+                this.state = 'scores';
+            }
+        },
+        startTimer() {
+            let timerStartRound = this.round;
+            let nbSeconds = this.TIME;
+            setTimeout(() => {
+                // Only trigger team change if no team has won this round
+                if (timerStartRound === this.round) {
+                    this.currentTeam = (this.currentTeam + 1) % this.nbTeams;
+                    this.state = 'next-team'
+                }
+                this.remainingTime = 30;
+            }, nbSeconds * 1000);
+
+            // Update the remaining time info every seconds
+            for (let i = 0; i < nbSeconds; i++) {
+                setTimeout(() => { this.remainingTime -= 1 }, 1000 * (i + 1));
+            }
+
+        },
+        backToMenu(){
+            this.$emit("backToMenu", null);
         }
     }
 }

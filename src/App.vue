@@ -10,7 +10,7 @@ import Game from './views/Game.vue'
   <div id="window">
     <h1>Time's Down</h1>
     <Menu v-if="state === 'menu'" @startGame="onStartGame"></Menu>
-    <Game v-if="state === 'game'" :nbTeams="nbTeams" :words="words"></Game>
+    <Game v-if="state === 'game'" :nbTeams="nbTeams" :words="words" @backToMenu="backToMenu"></Game>
   </div>
 </template>
 
@@ -29,6 +29,9 @@ export default {
       this.nbTeams = message.nbTeams;
       this.words = message.words;
       this.state = 'game';
+    },
+    backToMenu(message) {
+      this.state = 'menu';
     }
   }
 }
