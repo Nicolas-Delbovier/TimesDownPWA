@@ -43,10 +43,18 @@ export default {
   flex-direction: column;
   align-items: center;
   height: 95vh;
-  width: 95vw
+  width: 95vw;
+  background-color: var(--color-3);
 }
 
 h1 {
   text-align: center;
+  background-color: var(--color-4);
+  /* color: var(--color-3); */
+  color: #fff;
+  width: 100%;
+  margin-top:0;
+  padding: 0.5em 0;
+
 }
 </style>

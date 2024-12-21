@@ -9,12 +9,12 @@
         <span v-if="round === 3">Manche {{ round }}. Vous devez faire deviner le mot en utilisant des mimes uniquement.
             Une seule proposition par carte.</span>
         <span>Tour de l'équipe {{ currentTeam }}</span>
-        <button @click="() => this.state = 'next-team'">Jouer</button>
+        <button class="base-button" @click="() => this.state = 'next-team'">Jouer</button>
     </div>
 
     <div v-if="state === 'next-team'">
         <span>Tour de l'équipe {{ currentTeam }}.</span>
-        <button @click="() => { startTimer(); this.state = 'inside-round' }">Jouer</button>
+        <button class="base-button" @click="() => { startTimer(); this.state = 'inside-round' }">Jouer</button>
     </div>
 
     <div v-if="state === 'inside-round'" id="play-content">
@@ -22,12 +22,12 @@
             {{ currentWords[currentWordIndex] }}
         </span>
         <span>{{ remainingTime }} secondes</span>
-        <div id="action-buttons"><button @click="skipWord">Passer</button><button @click="validateWord">Valider</button>
+        <div id="action-buttons"><button class="base-button" @click="skipWord">Passer</button><button class="base-button" @click="validateWord">Valider</button>
         </div>
     </div>
 
     <div v-if="state === 'scores'">Scores: {{ scores.slice(0, nbTeams) }}
-        <button @click="backToMenu">Retour au menu</button>
+        <button class="base-button" @click="backToMenu">Retour au menu</button>
     </div>
 </template>
 
@@ -114,7 +114,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: aqua;
+    background-color: var(--color-3);
     padding-bottom: 2vh;
     height: 80%;
     width: 95%;

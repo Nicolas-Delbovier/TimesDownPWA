@@ -1,6 +1,6 @@
 <template>
     <button>
-        <img alt="Vue logo" class="logo" :src="imgSrc" :width="width" :height="height" />
+        <img alt="NavBar icon" class="icon" :src="imgSrc" :width="width" :height="height" />
         <span>{{ text }}</span>
     </button>
 </template>

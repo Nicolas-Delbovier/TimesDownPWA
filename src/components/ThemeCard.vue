@@ -1,8 +1,8 @@
 <template>
-    <div id="ThemeCard" @click="shiftUse">
+    <div id="ThemeCard" :class="use ? 'selected' : 'not-selected'" class="base-button" @click="shiftUse">
         <h2>{{ theme }}</h2>
-        <span>Number words: {{ numberWords }}</span>
-        <span>Use: {{ use }}</span>
+        <span>Nombres de mots : {{ numberWords }}</span>
+        <!-- <span>utiliser: {{ use }}</span> -->
     </div>
   
 </template>
@@ -30,10 +30,15 @@ export default {
     display: flex;
     flex-direction: column;
     border-radius: 50px;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
     padding: 20px;
     margin: 20px 10vw;
     justify-content: space-between;
-    cursor: pointer;
+}
+
+.selected{
+    background-color: var(--color-5);
+}
+.not-selected{
+    background-color: var(--color-2);
 }
 </style>

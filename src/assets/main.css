@@ -1,10 +1,22 @@
 /* In your main CSS file (e.g., styles.css) */
 :root {
-    --main-color: #183fdc;
+    --color-1: #780000;
+    --color-2: #c1121f;
+    --color-3: #fdf0d5;
+    --color-4: #003049;
+    --color-5: #669bbc;
 }
 
 .content {
     height: 60vh;
     width: 90vw;
     overflow-y: auto;
+}
+
+.base-button{
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid white;
+    background-color: var(--color-5);
+    color: white
 }

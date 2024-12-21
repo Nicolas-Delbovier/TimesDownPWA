@@ -21,5 +21,6 @@ export default {
     gap: 5px;
     text-align: center;
     background: rgb(188, 230, 188);
+    background-color: var(--color-3);
 }
 </style>

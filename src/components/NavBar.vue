@@ -1,6 +1,6 @@
 <template>
 
-    <div class="navbar-container">
+    <div class="navbar-container" id="navbar">
         <NavBarItem @click="onClick('play')" imgSrc="../src/assets/gameController.svg" :width="width" :height="height" text="Jouer" />
         <NavBarItem @click="onClick('themes')" imgSrc="../src/assets/newPage.svg" :width="width" :height="height" text="Thèmes" />
         <NavBarItem @click="onClick('modifications')" imgSrc="../src/assets/add.svg" :width="width" :height="height" text="Modifier" />
@@ -34,5 +34,9 @@ export default {
     margin: 20px 2vw;
     display: flex;
     justify-content: space-between;
+}
+
+#navbar{
+    background-color: var(--color-4);
 }
 </style>
