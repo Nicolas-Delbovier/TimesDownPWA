@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div v-if="state === 'scores'">Scores: {{ scores.slice(0, nbTeams) }} 
+    <div v-if="state === 'scores'">Scores: {{ scores.slice(0, nbTeams) }}
         <button @click="backToMenu">Retour au menu</button>
     </div>
 </template>
@@ -54,7 +54,9 @@ export default {
         },
         validateWord() {
             this.scores[this.currentTeam] += 1;
-            this.currentWords.shift(1)
+            // this.currentWords.shift(1)
+            this.currentWords.splice(this.currentWordIndex, 1);
+            this.currentWordIndex = Math.min(this.currentWordIndex, this.currentWords.length - 1);
             console.log(this.currentWords)
             if (this.currentWords.length === 0) {
                 this.currentWords = [...this.words];
@@ -62,7 +64,7 @@ export default {
                 this.round += 1;
                 this.remainingTime = this.TIME;
             }
-            if (this.round === 4){
+            if (this.round === 4) {
                 this.state = 'scores';
             }
         },
@@ -84,7 +86,7 @@ export default {
             }
 
         },
-        backToMenu(){
+        backToMenu() {
             this.$emit("backToMenu", null);
         }
     }
