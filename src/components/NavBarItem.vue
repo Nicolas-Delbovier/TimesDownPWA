@@ -23,4 +23,12 @@ button {
     gap: 3px;
     justify-content: center;
 }
+
+.icon{
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(70deg) brightness(104%) contrast(104%);
+}
+
+span{
+    color: white;
+}
 </style>
