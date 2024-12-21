@@ -44,7 +44,8 @@ export default {
             currentTeam: 0, // index of the team currently playing
             scores: [0, 0, 0, 0], // score of each Team
             remainingTime: 30,
-            TIME: 30
+            TIME: 30,
+            timeoutIds: []
         }
     },
     methods: {
@@ -56,13 +57,19 @@ export default {
             this.scores[this.currentTeam] += 1;
             // this.currentWords.shift(1)
             this.currentWords.splice(this.currentWordIndex, 1);
-            this.currentWordIndex = Math.min(this.currentWordIndex, this.currentWords.length - 1);
+            this.currentWordIndex = Math.min(this.currentWordIndex, Math.max(this.currentWords.length - 1, 0));
             console.log(this.currentWords)
             if (this.currentWords.length === 0) {
                 this.currentWords = [...this.words];
                 this.state = 'inter-round';
                 this.round += 1;
                 this.remainingTime = this.TIME;
+
+                // Clear timeouts to reset timer for next round
+                for (let id of this.timeoutIds) {
+                    clearTimeout(id);
+                }
+                this.timeoutIds = [];
             }
             if (this.round === 4) {
                 this.state = 'scores';
@@ -71,7 +78,8 @@ export default {
         startTimer() {
             let timerStartRound = this.round;
             let nbSeconds = this.TIME;
-            setTimeout(() => {
+
+            let id = setTimeout(() => {
                 // Only trigger team change if no team has won this round
                 if (timerStartRound === this.round) {
                     this.currentTeam = (this.currentTeam + 1) % this.nbTeams;
@@ -79,10 +87,12 @@ export default {
                 }
                 this.remainingTime = 30;
             }, nbSeconds * 1000);
+            this.timeoutIds.push(id);
 
             // Update the remaining time info every seconds
             for (let i = 0; i < nbSeconds; i++) {
-                setTimeout(() => { this.remainingTime -= 1 }, 1000 * (i + 1));
+                let id = setTimeout(() => { this.remainingTime -= 1 }, 1000 * (i + 1));
+                this.timeoutIds.push(id);
             }
 
         },
