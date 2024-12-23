@@ -70,11 +70,6 @@ export default {
     font-weight: bold;
 }
 
-#playButton:active {
-    background-color: var(--color-4);
-}
-
-
 #nbCardsRadioButtons, #nbCardsTeamsButtons {
     display: flex;
     flex-direction: column;
