@@ -1,19 +1,20 @@
 <template>
   <div class="game-view" v-if="state === 'inter-round'">
+    <div id="round-title">Manche {{ round }}</div>
     <div v-if="round === 1" class="info">
-      Manche {{ round }}. Vous devez faire deviner le mot en utilisant tous les
+      Vous devez faire deviner le mot en utilisant tous les
       mots que vous souhaitez du moment qu'ils ne "sonnent" pas de la même façon
       (ex: ne pas dire "maisonette" pour faire deviner "maison"). Votre équipe a
       autant d'essais qu'elle le souhaite pour deviner le mot. Les mimes ne sont
       pas autorisés durant cette manche.
     </div>
     <div v-if="round === 2" class="info">
-      Manche {{ round }}. Vous devez faire deviner le mot en utilisant un unique
+      Vous devez faire deviner le mot en utilisant un unique
       mot. Si la proposition de votre équipe est fausse, vous dever passer la
       carte.
     </div>
     <div v-if="round === 3" class="info">
-      Manche {{ round }}. Vous devez faire deviner le mot en utilisant des mimes
+      Vous devez faire deviner le mot en utilisant des mimes
       uniquement. Une seule proposition par carte.
     </div>
     <button class="base-button" @click="() => (this.state = 'next-team')">
@@ -131,6 +132,10 @@ export default {
 </script>
 
 <style scoped>
+
+#round-title{
+    font-size: 3rem;
+}
 .info {
   border: 2px solid white;
   margin: auto;
@@ -138,6 +143,7 @@ export default {
   border-radius: 1rem;
   color: white;
   padding: 1rem;
+  font-size: 1.5rem;
 }
 
 #current-word {
@@ -164,7 +170,6 @@ export default {
 }
 
 button {
-  cursor: pointer;
   padding: 5vh 15vw;
 }
 
