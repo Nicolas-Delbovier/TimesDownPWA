@@ -42,8 +42,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
+  height: auto;
+  width: auto;
   background-color: var(--color-3);
 }
 
