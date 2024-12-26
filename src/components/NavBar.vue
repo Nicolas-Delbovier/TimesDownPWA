@@ -1,9 +1,9 @@
 <template>
 
     <div class="navbar-container" id="navbar">
-        <NavBarItem @click="onClick('play')" imgSrc="../src/assets/gameController.svg" :width="width" :height="height" text="Jouer" />
-        <NavBarItem @click="onClick('themes')" imgSrc="../src/assets/newPage.svg" :width="width" :height="height" text="Thèmes" />
-        <NavBarItem @click="onClick('modifications')" imgSrc="../src/assets/add.svg" :width="width" :height="height" text="Modifier" />
+        <NavBarItem @click="onClick('play')" imgSrc="/assets/gameController.svg" :width="width" :height="height" text="Jouer" />
+        <NavBarItem @click="onClick('themes')" imgSrc="/assets/newPage.svg" :width="width" :height="height" text="Thèmes" />
+        <NavBarItem @click="onClick('modifications')" imgSrc="/assets/add.svg" :width="width" :height="height" text="Modifier" />
     </div>
 
 </template>

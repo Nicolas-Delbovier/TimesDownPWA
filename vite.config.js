@@ -11,7 +11,7 @@ export default defineConfig({
     vueDevTools(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
+      includeAssets: ["assets/add.svg", "assets/gameController.svg", "assets/newPage.svg"],
       manifest: {
         name: "Time's Down",
         short_name: "TD",
@@ -29,20 +29,20 @@ export default defineConfig({
             type: "image/png",
           },
         ],
-        screenshots: [
-          {
-            src: "img/screenshots/screenshot1.png",
-            sizes: "640x320",
-            type: "image/png",
-            form_factor: "wide",
-          },
-          {
-            src: "img/screenshots/screenshot2.png",
-            sizes: "320x640",
-            type: "image/png",
-            form_factor: "narrow",
-          },
-        ],
+        // screenshots: [
+        //   {
+        //     src: "img/screenshots/screenshot1.png",
+        //     sizes: "640x320",
+        //     type: "image/png",
+        //     form_factor: "wide",
+        //   },
+        //   {
+        //     src: "img/screenshots/screenshot2.png",
+        //     sizes: "320x640",
+        //     type: "image/png",
+        //     form_factor: "narrow",
+        //   },
+        // ],
       },
     }),
   ],
