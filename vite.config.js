@@ -46,6 +46,12 @@ export default defineConfig({
       },
     }),
   ],
+  // server: {
+  //   https: {
+  //     key: "./ssl/cert.key",
+  //     cert: "./ssl/cert.crt"
+  //   }
+  // },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
