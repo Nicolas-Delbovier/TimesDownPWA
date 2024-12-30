@@ -6,12 +6,12 @@
         Vous devez faire deviner le mot en utilisant tous les
         mots que vous souhaitez du moment qu'ils ne "sonnent" pas de la même façon
         (ex: ne pas dire "maisonette" pour faire deviner "maison"). Votre équipe a
-        autant d'essais qu'elle le souhaite pour deviner le mot. Les mimes ne sont
+        autant d'essais qu'elle le souhaite pour deviner le mot mais vous ne pouvez pas passez de mot. Les mimes ne sont
         pas autorisés durant cette manche.
       </div>
       <div v-if="round === 2" class="info">
         Vous devez faire deviner le mot en utilisant un unique
-        mot. Si la proposition de votre équipe est fausse, vous dever passer la
+        mot. Si la proposition de votre équipe est fausse, vous devez passer la
         carte.
       </div>
       <div v-if="round === 3" class="info">
