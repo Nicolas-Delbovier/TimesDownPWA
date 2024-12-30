@@ -20,7 +20,7 @@ export default {
     return {
       state: 'menu',
       nbTeams: 2,
-      words: []
+      words: [],
 
     }
   },
@@ -53,7 +53,7 @@ h1 {
   /* color: var(--color-3); */
   color: #fff;
   width: 100%;
-  margin-top:0;
+  margin-top: 0;
   padding: 0.5em 0;
 
 }

@@ -9,9 +9,10 @@
 
 <script>
 export default {
+    props: ['theme', 'numberWords', 'isUsed'],
     data(){
         return{
-            use: true
+            use: this.isUsed
         }
     },
     methods: {
@@ -20,7 +21,6 @@ export default {
             this.$emit('useTheme', {'theme': this.theme, 'use': this.use})
         }
     },
-    props: ['theme', 'numberWords']
 
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div id="menu">
-        <Play @playButtonPressed="startGame" @updateNbCards="updateNbCards" @updateNbTeams="updateNbTeams" v-if="contentView === 'play'" class="content" />
-        <ThemesSelection @useTheme="updateSelectedThemes" v-if="contentView === 'themes'" :decks="cardsData"
+        <Play @playButtonPressed="startGame" :nbCards="nbCardsToPlay" :nbTeams="nbTeams" @updateNbCards="updateNbCards" @updateNbTeams="updateNbTeams" v-if="contentView === 'play'" class="content" />
+        <ThemesSelection @useTheme="updateSelectedThemes" v-if="contentView === 'themes'" :decks="decks" :selectedThemes="selectedThemes"
             class="content" />
         <Modifications v-if="contentView === 'modifications'" class="content" />
         <NavBar @menuViewChange="changeMenuView" class="nav" height="50" width="50" />
@@ -21,8 +21,8 @@ export default {
     data() {
         return {
             contentView: 'play',
-            cardsData: jsonData['cards'],
-            selectedThemes: jsonData['cards'].map(x => x['theme']).reduce((acc, theme) => {
+            decks: jsonData['decks'],
+            selectedThemes: jsonData['decks'].map(x => x['theme']).reduce((acc, theme) => {
                 acc[theme] = true;
                 return acc
             }, {}),
@@ -45,7 +45,7 @@ export default {
         },
         startGame(message) {
             let allWords = [];
-            for (let  deck of this.cardsData){
+            for (let  deck of this.decks){
                 if (this.selectedThemes[deck['theme']]) {
                     allWords = allWords.concat(deck['words']);
                 }

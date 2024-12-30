@@ -79,7 +79,6 @@ export default {
     },
     validateWord() {
       this.scores[this.currentTeam] += 1;
-      // this.currentWords.shift(1)
       this.currentWords.splice(this.currentWordIndex, 1);
       this.currentWordIndex = Math.min(
         this.currentWordIndex,
