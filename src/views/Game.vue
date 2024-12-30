@@ -1,57 +1,56 @@
 <template>
-  <div class="game-view" v-if="state === 'inter-round'">
-    <div id="round-title">Manche {{ round }}</div>
-    <div v-if="round === 1" class="info">
-      Vous devez faire deviner le mot en utilisant tous les
-      mots que vous souhaitez du moment qu'ils ne "sonnent" pas de la même façon
-      (ex: ne pas dire "maisonette" pour faire deviner "maison"). Votre équipe a
-      autant d'essais qu'elle le souhaite pour deviner le mot. Les mimes ne sont
-      pas autorisés durant cette manche.
+  <div class="content">
+    <div v-if="state === 'inter-round'" class="game-view">
+      <div id="round-title">Manche {{ round }}</div>
+      <div v-if="round === 1" class="info">
+        Vous devez faire deviner le mot en utilisant tous les
+        mots que vous souhaitez du moment qu'ils ne "sonnent" pas de la même façon
+        (ex: ne pas dire "maisonette" pour faire deviner "maison"). Votre équipe a
+        autant d'essais qu'elle le souhaite pour deviner le mot. Les mimes ne sont
+        pas autorisés durant cette manche.
+      </div>
+      <div v-if="round === 2" class="info">
+        Vous devez faire deviner le mot en utilisant un unique
+        mot. Si la proposition de votre équipe est fausse, vous dever passer la
+        carte.
+      </div>
+      <div v-if="round === 3" class="info">
+        Vous devez faire deviner le mot en utilisant des mimes
+        uniquement. Une seule proposition par carte.
+      </div>
+      <button class="base-button" @click="() => (this.state = 'next-team')">
+        Compris !
+      </button>
     </div>
-    <div v-if="round === 2" class="info">
-      Vous devez faire deviner le mot en utilisant un unique
-      mot. Si la proposition de votre équipe est fausse, vous dever passer la
-      carte.
+
+    <div v-if="state === 'next-team'" class="game-view">
+      <div class="info">Tour de l'équipe {{ currentTeam }}.</div>
+      <button class="base-button" @click="() => {
+        startTimer();
+        this.state = 'inside-round';
+      }
+        ">
+        Jouer
+      </button>
     </div>
-    <div v-if="round === 3" class="info">
-      Vous devez faire deviner le mot en utilisant des mimes
-      uniquement. Une seule proposition par carte.
+
+    <div v-if="state === 'inside-round'" class="game-view">
+      <div id="current-word">
+        {{ currentWords[currentWordIndex] }}
+      </div>
+      <div>{{ remainingTime }} secondes</div>
+      <div id="action-buttons">
+        <button class="base-button" @click="skipWord">Passer</button>
+        <button class="base-button" @click="validateWord">Valider</button>
+      </div>
     </div>
-    <button class="base-button" @click="() => (this.state = 'next-team')">
-      Compris !
-    </button>
+
+    <div v-if="state === 'scores'" class="game-view">
+      <div class="info">Scores: {{ scores.slice(0, nbTeams) }}</div>
+      <button class="base-button" @click="backToMenu">Retour au menu</button>
+    </div>
   </div>
 
-  <div class="game-view" v-if="state === 'next-team'">
-    <div class="info">Tour de l'équipe {{ currentTeam }}.</div>
-    <button
-      class="base-button"
-      @click="
-        () => {
-          startTimer();
-          this.state = 'inside-round';
-        }
-      "
-    >
-      Jouer
-    </button>
-  </div>
-
-  <div class="game-view" v-if="state === 'inside-round'">
-    <div id="current-word">
-      {{ currentWords[currentWordIndex] }}
-    </div>
-    <div>{{ remainingTime }} secondes</div>
-    <div id="action-buttons">
-      <button class="base-button" @click="skipWord">Passer</button>
-      <button class="base-button" @click="validateWord">Valider</button>
-    </div>
-  </div>
-
-  <div class="game-view" v-if="state === 'scores'">
-    <div class="info">Scores: {{ scores.slice(0, nbTeams) }}</div>
-    <button class="base-button" @click="backToMenu">Retour au menu</button>
-  </div>
 </template>
 
 <script>
@@ -131,10 +130,10 @@ export default {
 </script>
 
 <style scoped>
-
-#round-title{
-    font-size: 3rem;
+#round-title {
+  font-size: 3rem;
 }
+
 .info {
   border: 2px solid white;
   margin: auto;
@@ -146,9 +145,12 @@ export default {
 }
 
 #current-word {
-  padding: 20% 45%;
+  margin: 3vw 3vw;
+  min-width: 50vw;
   font-size: 3rem;
   flex-grow: 1;
+  padding: auto;
+  text-align: center;
 }
 
 .game-view {
@@ -156,9 +158,10 @@ export default {
   flex-direction: column;
   align-items: center;
   background-color: var(--color-3);
-  padding-bottom: 2vh;
-  height: 80%;
-  width: 95%;
+  /* padding-bottom: 2vh; */
+  min-height: 80vh;
+  /* width: auto; */
+  overflow: hidden;
 }
 
 #action-buttons {

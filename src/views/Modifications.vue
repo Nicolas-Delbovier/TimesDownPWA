@@ -1,5 +1,5 @@
 <template>
-    <div id="main">
+    <div id="main" class="content">
         <input type="text">
         <input type="text">
         <button>Ajouter</button>
@@ -22,5 +22,6 @@ export default {
     text-align: center;
     background: rgb(188, 230, 188);
     background-color: var(--color-3);
+    min-height: 70vh;
 }
 </style>

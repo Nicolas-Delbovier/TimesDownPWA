@@ -42,9 +42,11 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: auto;
-  width: auto;
+  min-height: 100vh;
+  min-width:100vw;
+  max-width: 100vw;
   background-color: var(--color-3);
+  overflow-x: hidden;
 }
 
 h1 {
