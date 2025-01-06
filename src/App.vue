@@ -46,7 +46,6 @@ export default {
   min-width:100vw;
   max-width: 100vw;
   background-color: var(--color-3);
-  overflow-x: hidden;
 }
 
 h1 {
