@@ -27,7 +27,7 @@ export default {
 <style scoped>
 .navbar-container{
     border-radius: 50px;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+    border: 2px solid #fff;
     padding: 20px;
     margin: 20px 2vw;
     display: flex;
