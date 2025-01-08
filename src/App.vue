@@ -43,8 +43,6 @@ export default {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  min-width:100vw;
-  max-width: 100vw;
   background-color: var(--color-3);
 }
 

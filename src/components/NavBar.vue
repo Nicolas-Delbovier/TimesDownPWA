@@ -1,9 +1,12 @@
 <template>
 
     <div class="navbar-container" id="navbar">
-        <NavBarItem @click="onClick('play')" imgSrc="/assets/gameController.svg" :width="width" :height="height" text="Jouer" />
-        <NavBarItem @click="onClick('themes')" imgSrc="/assets/newPage.svg" :width="width" :height="height" text="Thèmes" />
-        <NavBarItem @click="onClick('modifications')" imgSrc="/assets/add.svg" :width="width" :height="height" text="Modifier" />
+        <NavBarItem :class="current === 'play' ? 'selected' : null" @click="onClick('play')"
+            imgSrc="/assets/gameController.svg" :width="width" :height="height" text="Jouer" />
+        <NavBarItem :class="current === 'themes' ? 'selected' : null" @click="onClick('themes')"
+            imgSrc="/assets/newPage.svg" :width="width" :height="height" text="Thèmes" />
+        <NavBarItem :class="current === 'modifications' ? 'selected' : null" @click="onClick('modifications')"
+            imgSrc="/assets/add.svg" :width="width" :height="height" text="Modifier" />
     </div>
 
 </template>
@@ -12,20 +15,26 @@
 import NavBarItem from './NavBarItem.vue'
 
 export default {
+    data() {
+        return {
+            current: "play"
+        }
+    },
     components: {
         NavBarItem
     },
     props: ['width', 'height'],
-    methods:{
-        onClick(menuView){
+    methods: {
+        onClick(menuView) {
             this.$emit('menuViewChange', menuView);
+            this.current = menuView;
         }
     }
 }
 </script>
 
 <style scoped>
-.navbar-container{
+.navbar-container {
     border-radius: 50px;
     border: 2px solid #fff;
     padding: 20px;
@@ -34,7 +43,20 @@ export default {
     justify-content: space-between;
 }
 
-#navbar{
+.selected {
+
+    /* --- Try to make the selected nav-item pop out --- */
+    /* background-color: var(--color-4);
+    border-radius: 40%;
+    border-top: 1px solid white;
+    transform: translateY(-5vh);
+    transition: all 0.3s ease; */
+
+    border: 3px solid white;
+    border-radius: 30%;
+}
+
+#navbar {
     background-color: var(--color-4);
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
     <div id="main">
-        <h2>Jouer</h2>
         <div id="nbCardsRadioButtons">
             <h3>Nombre de cartes</h3>
             <button @click="updateNbCards(15)" :class="localNbCards === 15 ? 'active-class' : 'inactive-class'"
@@ -54,7 +53,6 @@ export default {
 <style scoped>
 #main {
     text-align: center;
-    background: rgb(188, 230, 188);
     display: flex;
     background-color: var(--color-3);
     flex-direction: column;
@@ -77,6 +75,9 @@ export default {
 #playButton {
     margin: 5vh 5vw;
     font-weight: bold;
+    font-size: large;
+    padding: 3vh;
+    border: 5px solid white;
 }
 
 #nbCardsRadioButtons,

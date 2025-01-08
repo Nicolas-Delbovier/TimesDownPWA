@@ -46,7 +46,22 @@
     </div>
 
     <div v-if="state === 'scores'" class="game-view">
-      <div class="info">Scores: {{ scores.slice(0, nbTeams) }}</div>
+
+      <table id="scores-table">
+        <thead>
+          <tr>
+            <th>Equipe</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(score, index) in scores.slice(0, nbTeams)" :key="index">
+            <td>{{ index }}</td>
+            <td>{{ score }}</td>
+          </tr>
+        </tbody>
+      </table>
+
       <button class="base-button" @click="backToMenu">Retour au menu</button>
     </div>
   </div>
@@ -144,6 +159,33 @@ export default {
   font-size: 1.5rem;
 }
 
+#scores-table{
+  margin: auto;
+  padding: 1rem;
+  font-size: large;
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  color: white;
+}
+
+th, td {
+  border: 3px solid #fff; /* Black border for table cells */
+  padding: 2vh;
+  text-align: left;
+  font-size: large;
+}
+
+th {
+  background-color: var(--color-4); /* Light gray background for header */
+}
+
+tr {
+  background-color: var(--color-5); /* Light gray background for even rows */
+}
+
 #current-word {
   margin: 3vw 3vw;
   min-width: 50vw;
@@ -158,17 +200,15 @@ export default {
   flex-direction: column;
   align-items: center;
   background-color: var(--color-3);
-  /* padding-bottom: 2vh; */
   min-height: 80vh;
-  /* width: auto; */
-  overflow: hidden;
+  margin: auto 3vw;
 }
 
 #action-buttons {
   display: flex;
   justify-content: center;
   width: 100%;
-  /* gap: 5vw; */
+  gap: 5vw;
 }
 
 button {

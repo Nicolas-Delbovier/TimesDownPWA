@@ -1,6 +1,5 @@
 <template>
     <div id="main">
-        <h2>Sélection de thème</h2>
         <div v-for="deck in decks" :key="deck['theme']">
             <ThemeCard @useTheme="message => this.$emit('useTheme', message)" :theme="deck['theme']" :numberWords="deck['words'].length" :isUsed="selectedThemes[deck['theme']]"></ThemeCard>
         </div>
