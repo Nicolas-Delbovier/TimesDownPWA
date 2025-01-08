@@ -52,8 +52,8 @@ export default {
                     allWords = allWords.concat(deck["words"]);
                 }
             }
-            allWords = allWords.slice(0, this.nbCardsToPlay);
             allWords = allWords.sort(() => 0.5 - Math.random());
+            allWords = allWords.slice(0, this.nbCardsToPlay);
             this.$emit("startGame", { words: allWords, nbTeams: this.nbTeams });
         },
         changeMenuView(message) {
