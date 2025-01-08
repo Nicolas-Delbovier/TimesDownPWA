@@ -18,7 +18,7 @@
         Vous devez faire deviner le mot en utilisant des mimes
         uniquement. Une seule proposition par carte.
       </div>
-      <button class="base-button" @click="() => (this.state = 'next-team')">
+      <button class="base-button" @click="startRound">
         Compris !
       </button>
     </div>
@@ -46,7 +46,6 @@
     </div>
 
     <div v-if="state === 'scores'" class="game-view">
-
       <table id="scores-table">
         <thead>
           <tr>
@@ -86,6 +85,10 @@ export default {
     };
   },
   methods: {
+    startRound() {
+      this.state = 'next-team';
+      this.currentWords = [...this.words].sort(() => 0.5 - Math.random());
+    },
     skipWord() {
       this.currentWordIndex =
         (this.currentWordIndex + 1) % this.currentWords.length;
@@ -123,6 +126,7 @@ export default {
         // Only trigger team change if no team has won this round
         if (timerStartRound === this.round) {
           this.currentTeam = (this.currentTeam + 1) % this.nbTeams;
+          this.currentWordIndex = (this.currentWordIndex + 1) % this.currentWords.length;
           this.state = "next-team";
         }
         this.remainingTime = 30;
@@ -159,7 +163,7 @@ export default {
   font-size: 1.5rem;
 }
 
-#scores-table{
+#scores-table {
   margin: auto;
   padding: 1rem;
   font-size: large;
@@ -171,19 +175,23 @@ table {
   color: white;
 }
 
-th, td {
-  border: 3px solid #fff; /* Black border for table cells */
+th,
+td {
+  border: 3px solid #fff;
+  /* Black border for table cells */
   padding: 2vh;
   text-align: left;
   font-size: large;
 }
 
 th {
-  background-color: var(--color-4); /* Light gray background for header */
+  background-color: var(--color-4);
+  /* Light gray background for header */
 }
 
 tr {
-  background-color: var(--color-5); /* Light gray background for even rows */
+  background-color: var(--color-5);
+  /* Light gray background for even rows */
 }
 
 #current-word {
