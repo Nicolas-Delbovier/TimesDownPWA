@@ -1,9 +1,6 @@
 <template>
     <div id="main" class="content">
-        <input type="text">
-        <input type="text">
-        <button>Ajouter</button>
-        <span>...</span>
+        <div id="unavailable-message">Indisponible</div>
     </div>
 </template>
 
@@ -19,9 +16,18 @@ export default {
     flex-direction: column;
     padding: 2vw;
     gap: 5px;
-    text-align: center;
-    background: rgb(188, 230, 188);
+    justify-content: center;
     background-color: var(--color-3);
-    min-height: 70vh;
+    min-height: 60vh;
+
+    padding: auto;
+}
+
+#unavailable-message{
+    border: 5px double var(--color-1);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 2rem;
+    color: var(--color-1);
 }
 </style>
