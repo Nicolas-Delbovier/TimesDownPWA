@@ -24,7 +24,10 @@
       <div class="info">Tour de l'équipe {{ currentTeam + 1 }}.</div>
       <button
         :disabled="isNextTeamButtonDisabled"
-        :class="['base-button', { 'disabled-button': isNextTeamButtonDisabled }]"
+        :class="[
+          'base-button',
+          { 'disabled-button': isNextTeamButtonDisabled },
+        ]"
         @click="
           () => {
             startTimer();
@@ -63,7 +66,24 @@
         </tbody>
       </table>
 
-      <button class="base-button" @click="backToMenu">Retour au menu</button>
+      <button
+        v-if="round <= 3"
+        class="base-button"
+        @click="nextTeam"
+        :disabled="isScoresButtonDisabled"
+        :class="['base-button', { 'disabled-button': isScoresButtonDisabled }]"
+      >
+        Continuer
+      </button>
+      <button
+        v-if="round > 3"
+        class="base-button"
+        @click="backToMenu"
+        :disabled="isScoresButtonDisabled"
+        :class="['base-button', { 'disabled-button': isScoresButtonDisabled }]"
+      >
+        Retour au menu
+      </button>
     </div>
   </div>
 </template>
@@ -82,8 +102,10 @@ export default {
       scores: [0, 0, 0, 0], // score of each Team
       remainingTime: 30,
       TIME: 30,
+      DISABLED_BUTTON_DURATION_SEC: 2,
       timeoutIds: [],
       isNextTeamButtonDisabled: true,
+      isScoresButtonDisabled: true,
     };
   },
   methods: {
@@ -91,13 +113,20 @@ export default {
       this.nextTeam();
       this.currentWords = [...this.words].sort(() => 0.5 - Math.random());
     },
-
     nextTeam() {
       this.state = "next-team";
       this.isNextTeamButtonDisabled = true;
       setTimeout(() => {
         this.isNextTeamButtonDisabled = false;
-      }, 1000 * 3);
+      }, 1000 * this.DISABLED_BUTTON_DURATION_SEC);
+    },
+    showScores() {
+      this.isScoresButtonDisabled = true;
+      this.state = "scores";
+      setTimeout(
+        () => (this.isScoresButtonDisabled = false),
+        1000 * this.DISABLED_BUTTON_DURATION_SEC
+      );
     },
     skipWord() {
       this.currentWordIndex =
@@ -112,20 +141,22 @@ export default {
         Math.max(this.currentWords.length - 1, 0)
       );
       console.log(this.currentWords);
+
+      // When we are at the end of the round
       if (this.currentWords.length === 0) {
         this.currentWords = [...this.words];
-        this.state = "inter-round";
         this.round += 1;
-        this.remainingTime = this.TIME;
+        this.showScores();
 
         // Clear timeouts to reset timer for next round
         for (let id of this.timeoutIds) {
           clearTimeout(id);
         }
         this.timeoutIds = [];
+        this.remainingTime = this.TIME;
       }
       if (this.round === 4) {
-        this.state = "scores";
+        this.showScores();
       }
     },
     startTimer() {
@@ -234,7 +265,7 @@ button {
   padding: 5vh 15vw;
 }
 
-.disabled-button{
+.disabled-button {
   background-color: #717171;
 }
 
