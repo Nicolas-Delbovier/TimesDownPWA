@@ -16,7 +16,7 @@ export default defineConfig({
         name: "Time's Down",
         short_name: "TD",
         description: "Implementation of Time's Up game into a web app",
-        theme_color: "#4DBA87",
+        theme_color: "#003049",
         icons: [
           {
             src: "img/icons/android-chrome-192x192.png",

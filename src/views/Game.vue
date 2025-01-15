@@ -3,33 +3,35 @@
     <div v-if="state === 'inter-round'" class="game-view">
       <div id="round-title">Manche {{ round }}</div>
       <div v-if="round === 1" class="info">
-        Vous devez faire deviner le mot en utilisant tous les
-        mots que vous souhaitez du moment qu'ils ne "sonnent" pas de la même façon
-        (ex: ne pas dire "maisonette" pour faire deviner "maison"). Votre équipe a
-        autant d'essais qu'elle le souhaite pour deviner le mot mais vous ne pouvez pas passez de mot. Les mimes ne sont
-        pas autorisés durant cette manche.
+        Vous devez faire deviner le mot en utilisant tous les mots que vous
+        souhaitez du moment qu'ils ne "sonnent" pas de la même façon (ex: ne pas
+        dire "maisonette" pour faire deviner "maison"). Votre équipe a autant
+        d'essais qu'elle le souhaite pour deviner le mot mais vous ne pouvez pas
+        passer de mot. Les mimes ne sont pas autorisés durant cette manche.
       </div>
       <div v-if="round === 2" class="info">
-        Vous devez faire deviner le mot en utilisant un unique
-        mot. Si la proposition de votre équipe est fausse, vous devez passer la
-        carte.
+        Vous devez faire deviner le mot en utilisant un unique mot. Si la
+        proposition de votre équipe est fausse, vous devez passer la carte.
       </div>
       <div v-if="round === 3" class="info">
-        Vous devez faire deviner le mot en utilisant des mimes
-        uniquement. Une seule proposition par carte.
+        Vous devez faire deviner le mot en utilisant des mimes uniquement. Une
+        seule proposition par carte.
       </div>
-      <button class="base-button" @click="startRound">
-        Compris !
-      </button>
+      <button class="base-button" @click="startRound">Compris !</button>
     </div>
 
     <div v-if="state === 'next-team'" class="game-view">
-      <div class="info">Tour de l'équipe {{ currentTeam }}.</div>
-      <button class="base-button" @click="() => {
-        startTimer();
-        this.state = 'inside-round';
-      }
-        ">
+      <div class="info">Tour de l'équipe {{ currentTeam + 1 }}.</div>
+      <button
+        :disabled="isNextTeamButtonDisabled"
+        :class="['base-button', { 'disabled-button': isNextTeamButtonDisabled }]"
+        @click="
+          () => {
+            startTimer();
+            this.state = 'inside-round';
+          }
+        "
+      >
         Jouer
       </button>
     </div>
@@ -55,7 +57,7 @@
         </thead>
         <tbody>
           <tr v-for="(score, index) in scores.slice(0, nbTeams)" :key="index">
-            <td>{{ index }}</td>
+            <td>{{ index + 1 }}</td>
             <td>{{ score }}</td>
           </tr>
         </tbody>
@@ -64,7 +66,6 @@
       <button class="base-button" @click="backToMenu">Retour au menu</button>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -82,12 +83,21 @@ export default {
       remainingTime: 30,
       TIME: 30,
       timeoutIds: [],
+      isNextTeamButtonDisabled: true,
     };
   },
   methods: {
     startRound() {
-      this.state = 'next-team';
+      this.nextTeam();
       this.currentWords = [...this.words].sort(() => 0.5 - Math.random());
+    },
+
+    nextTeam() {
+      this.state = "next-team";
+      this.isNextTeamButtonDisabled = true;
+      setTimeout(() => {
+        this.isNextTeamButtonDisabled = false;
+      }, 1000 * 3);
     },
     skipWord() {
       this.currentWordIndex =
@@ -126,8 +136,9 @@ export default {
         // Only trigger team change if no team has won this round
         if (timerStartRound === this.round) {
           this.currentTeam = (this.currentTeam + 1) % this.nbTeams;
-          this.currentWordIndex = (this.currentWordIndex + 1) % this.currentWords.length;
-          this.state = "next-team";
+          this.currentWordIndex =
+            (this.currentWordIndex + 1) % this.currentWords.length;
+          this.nextTeam();
         }
         this.remainingTime = 30;
       }, nbSeconds * 1000);
@@ -221,6 +232,10 @@ tr {
 
 button {
   padding: 5vh 15vw;
+}
+
+.disabled-button{
+  background-color: #717171;
 }
 
 #inter-round {
