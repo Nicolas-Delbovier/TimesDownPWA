@@ -1,4 +1,6 @@
 /* In your main CSS file (e.g., styles.css) */
+@import "tailwindcss";
+
 :root {
   --color-1: #780000;
   --color-2: #c1121f;
