@@ -1,3 +1,113 @@
+<script setup>
+import { ref, reactive, computed, onBeforeUnmount, defineProps, defineEmits } from 'vue';
+
+const emit = defineEmits(['backToMenu']);
+const props = defineProps(['nbTeams', 'words']);
+
+const round = ref(1);
+const state = ref('inter-round');
+const currentWords = ref([...props.words].sort(() => 0.5 - Math.random()));
+const currentWordIndex = ref(0);
+const currentTeam = ref(0);
+const scores = reactive(Array(4).fill(0));
+const remainingTime = ref(30);
+const TIME = 30;
+const DISABLED_BUTTON_DURATION_SEC = 2;
+const timeoutIds = ref([]);
+const isNextTeamButtonDisabled = ref(true);
+const isScoresButtonDisabled = ref(true);
+
+const startRound = () => {
+  nextTeam();
+  currentWords.value = [...props.words].sort(() => 0.5 - Math.random());
+};
+
+const nextTeam = () => {
+  state.value = 'next-team';
+  isNextTeamButtonDisabled.value = true;
+  const timeoutId = setTimeout(() => {
+    isNextTeamButtonDisabled.value = false;
+  }, 1000 * DISABLED_BUTTON_DURATION_SEC);
+};
+
+const showScores = () => {
+  isScoresButtonDisabled.value = true;
+  state.value = 'scores';
+  const timeoutId = setTimeout(
+    () => (isScoresButtonDisabled.value = false),
+    1000 * DISABLED_BUTTON_DURATION_SEC
+  );
+};
+
+const skipWord = () => {
+  currentWordIndex.value = (currentWordIndex.value + 1) % currentWords.value.length;
+  console.log(currentWords.value);
+};
+
+const validateWord = () => {
+  scores[currentTeam.value]++;
+  currentWords.value.splice(currentWordIndex.value, 1);
+  currentWordIndex.value = Math.min(
+    currentWordIndex.value,
+    Math.max(currentWords.value.length - 1, 0)
+  );
+  console.log(currentWords.value);
+
+  // When we are at the end of the round
+  if (currentWords.value.length === 0) {
+    currentWords.value = [...props.words];
+    round.value++;
+    showScores();
+
+    // Clear timeouts to reset timer for next round
+    timeoutIds.value.forEach(clearTimeout);
+    timeoutIds.value = [];
+    remainingTime.value = TIME;
+  }
+  if (round.value === 4) {
+    showScores();
+  }
+};
+
+const startTimer = () => {
+  const timerStartRound = round.value;
+  const nbSeconds = TIME;
+
+  const timeoutId1 = setTimeout(() => {
+    // Only trigger team change if no team has won this round
+    if (timerStartRound === round.value) {
+      currentTeam.value = (currentTeam.value + 1) % props.nbTeams;
+      currentWordIndex.value =
+        (currentWordIndex.value + 1) % currentWords.value.length;
+      nextTeam();
+    }
+    remainingTime.value = 30;
+  }, nbSeconds * 1000);
+  timeoutIds.value.push(timeoutId1);
+
+  // Update the remaining time info every second
+  for (let i = 0; i < nbSeconds; i++) {
+    const timeoutId2 = setTimeout(() => {
+      remainingTime.value--;
+    }, 1000 * (i + 1));
+    timeoutIds.value.push(timeoutId2);
+  }
+};
+
+const startNextTeamTurn = () => {
+  startTimer();
+  state.value = 'inside-round';
+};
+
+const backToMenu = () => {
+  emit('backToMenu', null);
+};
+
+onBeforeUnmount(() => {
+  timeoutIds.value.forEach(clearTimeout);
+});
+</script>
+
 <template>
   <div class="content">
     <div v-if="state === 'inter-round'" class="game-view">
@@ -22,19 +132,10 @@
 
     <div v-if="state === 'next-team'" class="game-view">
       <div class="info">Tour de l'équipe {{ currentTeam + 1 }}.</div>
-      <button
-        :disabled="isNextTeamButtonDisabled"
-        :class="[
-          'base-button',
-          { 'disabled-button': isNextTeamButtonDisabled },
-        ]"
-        @click="
-          () => {
-            startTimer();
-            this.state = 'inside-round';
-          }
-        "
-      >
+      <button :disabled="isNextTeamButtonDisabled" :class="[
+        'base-button',
+        { 'disabled-button': isNextTeamButtonDisabled },
+      ]" @click="startNextTeamTurn">
         Jouer
       </button>
     </div>
@@ -66,129 +167,17 @@
         </tbody>
       </table>
 
-      <button
-        v-if="round <= 3"
-        class="base-button"
-        @click="nextTeam"
-        :disabled="isScoresButtonDisabled"
-        :class="['base-button', { 'disabled-button': isScoresButtonDisabled }]"
-      >
+      <button v-if="round <= 3" class="base-button" @click="nextTeam" :disabled="isScoresButtonDisabled"
+        :class="['base-button', { 'disabled-button': isScoresButtonDisabled }]">
         Continuer
       </button>
-      <button
-        v-if="round > 3"
-        class="base-button"
-        @click="backToMenu"
-        :disabled="isScoresButtonDisabled"
-        :class="['base-button', { 'disabled-button': isScoresButtonDisabled }]"
-      >
+      <button v-if="round > 3" class="base-button" @click="backToMenu" :disabled="isScoresButtonDisabled"
+        :class="['base-button', { 'disabled-button': isScoresButtonDisabled }]">
         Retour au menu
       </button>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  emits: ["backToMenu"],
-  props: ["nbTeams", "words"],
-  data() {
-    return {
-      round: 1,
-      state: "inter-round",
-      currentWords: [...this.words], // words that are still in the deck for this round
-      currentWordIndex: 0,
-      currentTeam: 0, // index of the team currently playing
-      scores: [0, 0, 0, 0], // score of each Team
-      remainingTime: 30,
-      TIME: 30,
-      DISABLED_BUTTON_DURATION_SEC: 2,
-      timeoutIds: [],
-      isNextTeamButtonDisabled: true,
-      isScoresButtonDisabled: true,
-    };
-  },
-  methods: {
-    startRound() {
-      this.nextTeam();
-      this.currentWords = [...this.words].sort(() => 0.5 - Math.random());
-    },
-    nextTeam() {
-      this.state = "next-team";
-      this.isNextTeamButtonDisabled = true;
-      setTimeout(() => {
-        this.isNextTeamButtonDisabled = false;
-      }, 1000 * this.DISABLED_BUTTON_DURATION_SEC);
-    },
-    showScores() {
-      this.isScoresButtonDisabled = true;
-      this.state = "scores";
-      setTimeout(
-        () => (this.isScoresButtonDisabled = false),
-        1000 * this.DISABLED_BUTTON_DURATION_SEC
-      );
-    },
-    skipWord() {
-      this.currentWordIndex =
-        (this.currentWordIndex + 1) % this.currentWords.length;
-      console.log(this.currentWords);
-    },
-    validateWord() {
-      this.scores[this.currentTeam] += 1;
-      this.currentWords.splice(this.currentWordIndex, 1);
-      this.currentWordIndex = Math.min(
-        this.currentWordIndex,
-        Math.max(this.currentWords.length - 1, 0)
-      );
-      console.log(this.currentWords);
-
-      // When we are at the end of the round
-      if (this.currentWords.length === 0) {
-        this.currentWords = [...this.words];
-        this.round += 1;
-        this.showScores();
-
-        // Clear timeouts to reset timer for next round
-        for (let id of this.timeoutIds) {
-          clearTimeout(id);
-        }
-        this.timeoutIds = [];
-        this.remainingTime = this.TIME;
-      }
-      if (this.round === 4) {
-        this.showScores();
-      }
-    },
-    startTimer() {
-      let timerStartRound = this.round;
-      let nbSeconds = this.TIME;
-
-      let id = setTimeout(() => {
-        // Only trigger team change if no team has won this round
-        if (timerStartRound === this.round) {
-          this.currentTeam = (this.currentTeam + 1) % this.nbTeams;
-          this.currentWordIndex =
-            (this.currentWordIndex + 1) % this.currentWords.length;
-          this.nextTeam();
-        }
-        this.remainingTime = 30;
-      }, nbSeconds * 1000);
-      this.timeoutIds.push(id);
-
-      // Update the remaining time info every seconds
-      for (let i = 0; i < nbSeconds; i++) {
-        let id = setTimeout(() => {
-          this.remainingTime -= 1;
-        }, 1000 * (i + 1));
-        this.timeoutIds.push(id);
-      }
-    },
-    backToMenu() {
-      this.$emit("backToMenu", null);
-    },
-  },
-};
-</script>
 
 <style scoped>
 #round-title {

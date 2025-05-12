@@ -1,15 +1,27 @@
+<script setup>
+import { defineProps } from 'vue';
+
+defineProps({
+  width: {
+    type: [String, Number],
+    default: 24,
+  },
+  height: {
+    type: [String, Number],
+    default: 24,
+  },
+  color: {
+    type: String,
+    default: 'currentColor',
+  },
+});
+</script>
+
 <template>
-  <svg :style="{fill: color}" :width="width" :height="height">
+  <svg :style="{ fill: color }" :width="width" :height="height">
   </svg>
 </template>
 
-<script>
-export default {
-    props: ['width', 'height', 'color']
-
-}
-</script>
-
 <style>
-
+/* Any global styles for SVGs could go here if needed */
 </style>

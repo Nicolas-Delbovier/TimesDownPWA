@@ -1,3 +1,55 @@
+<script setup>
+import { ref, reactive, computed, defineAsyncComponent, defineEmits } from 'vue';
+import jsonData from '../../data/data.json';
+
+// Import components using defineAsyncComponent for potential performance benefits
+const NavBar = defineAsyncComponent(() => import('../components/NavBar.vue'));
+const ThemesSelection = defineAsyncComponent(() => import('./ThemesSelection.vue'));
+const Modifications = defineAsyncComponent(() => import('./Modifications.vue'));
+const Play = defineAsyncComponent(() => import('./Play.vue'));
+
+const emit = defineEmits(['startGame']);
+
+const contentView = ref('play');
+const decks = ref(jsonData.decks);
+const selectedThemes = ref(
+    jsonData.decks.reduce((acc, deck) => {
+        acc[deck.theme] = true;
+        return acc;
+    }, {})
+);
+const nbCardsToPlay = ref(30);
+const nbTeams = ref(2);
+
+const updateNbCards = (message) => {
+    nbCardsToPlay.value = message;
+};
+
+const updateNbTeams = (message) => {
+    nbTeams.value = message;
+};
+
+const startGame = () => {
+    let allWords = [];
+    for (const deck of decks.value) {
+        if (selectedThemes.value[deck.theme]) {
+            allWords = allWords.concat(deck.words);
+        }
+    }
+    allWords.sort(() => 0.5 - Math.random());
+    allWords = allWords.slice(0, nbCardsToPlay.value);
+    emit('startGame', { words: allWords, nbTeams: nbTeams.value });
+};
+
+const changeMenuView = (message) => {
+    contentView.value = message;
+};
+
+const updateSelectedThemes = (message) => {
+    selectedThemes.value[message.theme] = message.use;
+};
+</script>
+
 <template>
     <div id="menu">
         <Play @playButtonPressed="startGame" :nbCards="nbCardsToPlay" :nbTeams="nbTeams" @updateNbCards="updateNbCards"
@@ -8,63 +60,6 @@
         <NavBar @menuViewChange="changeMenuView" class="nav" height="50" width="50" />
     </div>
 </template>
-
-<script>
-import NavBar from "../components/NavBar.vue";
-import ThemesSelection from "./ThemesSelection.vue";
-import Modifications from "./Modifications.vue";
-import Play from "./Play.vue";
-
-import jsonData from "../../data/data.json";
-
-export default {
-    data() {
-        return {
-            contentView: "play",
-            decks: jsonData["decks"],
-            selectedThemes: jsonData["decks"]
-                .map((x) => x["theme"])
-                .reduce((acc, theme) => {
-                    acc[theme] = true;
-                    return acc;
-                }, {}),
-            nbCardsToPlay: 30,
-            nbTeams: 2,
-        };
-    },
-    components: {
-        NavBar,
-        ThemesSelection,
-        Play,
-        Modifications,
-    },
-    methods: {
-        updateNbCards(message) {
-            this.nbCardsToPlay = message;
-        },
-        updateNbTeams(message) {
-            this.nbTeams = message;
-        },
-        startGame(message) {
-            let allWords = [];
-            for (let deck of this.decks) {
-                if (this.selectedThemes[deck["theme"]]) {
-                    allWords = allWords.concat(deck["words"]);
-                }
-            }
-            allWords = allWords.sort(() => 0.5 - Math.random());
-            allWords = allWords.slice(0, this.nbCardsToPlay);
-            this.$emit("startGame", { words: allWords, nbTeams: this.nbTeams });
-        },
-        changeMenuView(message) {
-            this.contentView = message;
-        },
-        updateSelectedThemes(message) {
-            this.selectedThemes[message["theme"]] = message["use"];
-        },
-    },
-};
-</script>
 
 <style scoped>
 #menu {

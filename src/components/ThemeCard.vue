@@ -1,32 +1,40 @@
-<template>
-    <div id="ThemeCard" :class="use ? 'selected' : 'not-selected'" class="base-button" @click="shiftUse">
-        <h2>{{ theme }}</h2>
-        <span>Nombres de mots : {{ numberWords }}</span>
-        <!-- <span>utiliser: {{ use }}</span> -->
-    </div>
-  
-</template>
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue';
 
-<script>
-export default {
-    props: ['theme', 'numberWords', 'isUsed'],
-    data(){
-        return{
-            use: this.isUsed
-        }
+const props = defineProps({
+    theme: {
+        type: String,
+        required: true,
     },
-    methods: {
-        shiftUse(){
-            this.use = !this.use;
-            this.$emit('useTheme', {'theme': this.theme, 'use': this.use})
-        }
+    numberWords: {
+        type: Number,
+        required: true,
     },
+    isUsed: {
+        type: Boolean,
+        default: false,
+    },
+});
 
-}
+const emit = defineEmits(['useTheme']);
+
+const use = ref(props.isUsed);
+
+const shiftUse = () => {
+    use.value = !use.value;
+    emit('useTheme', { theme: props.theme, use: use.value });
+};
 </script>
 
+<template>
+    <div id="ThemeCard" :class="{ 'selected': use, 'not-selected': !use }" class="base-button" @click="shiftUse">
+        <h2>{{ theme }}</h2>
+        <span>Nombres de mots : {{ numberWords }}</span>
+    </div>
+</template>
+
 <style scoped>
-#ThemeCard{
+#ThemeCard {
     display: flex;
     flex-direction: column;
     border-radius: 50px;
@@ -35,10 +43,11 @@ export default {
     justify-content: space-between;
 }
 
-.selected{
+.selected {
     background-color: var(--color-5);
 }
-.not-selected{
+
+.not-selected {
     background-color: var(--color-2);
 }
 </style>

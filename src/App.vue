@@ -1,9 +1,21 @@
 <script setup>
-// import { RouterLink, RouterView } from 'vue-router'
-import Menu from './views/Menu.vue'
-import Game from './views/Game.vue'
+import { ref } from 'vue';
+import Menu from './views/Menu.vue';
+import Game from './views/Game.vue';
 
+const state = ref('menu');
+const nbTeams = ref(2);
+const words = ref([]);
 
+const onStartGame = (message) => {
+  nbTeams.value = message.nbTeams;
+  words.value = message.words;
+  state.value = 'game';
+};
+
+const backToMenu = () => {
+  state.value = 'menu';
+};
 </script>
 
 <template>
@@ -13,29 +25,6 @@ import Game from './views/Game.vue'
     <Game v-if="state === 'game'" :nbTeams="nbTeams" :words="words" @backToMenu="backToMenu"></Game>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      state: 'menu',
-      nbTeams: 2,
-      words: [],
-
-    }
-  },
-  methods: {
-    onStartGame(message) {
-      this.nbTeams = message.nbTeams;
-      this.words = message.words;
-      this.state = 'game';
-    },
-    backToMenu(message) {
-      this.state = 'menu';
-    }
-  }
-}
-</script>
 
 <style scoped>
 #window {
@@ -54,6 +43,5 @@ h1 {
   width: 100%;
   margin-top: 0;
   padding: 0.5em 0;
-
 }
 </style>

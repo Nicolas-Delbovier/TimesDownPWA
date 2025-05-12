@@ -1,16 +1,32 @@
+<script setup>
+import { defineProps } from 'vue';
+
+defineProps({
+    imgSrc: {
+        type: String,
+        required: true,
+    },
+    width: {
+        type: [String, Number],
+        default: 24,
+    },
+    height: {
+        type: [String, Number],
+        default: 24,
+    },
+    text: {
+        type: String,
+        default: '',
+    },
+});
+</script>
+
 <template>
     <button>
         <img alt="NavBar icon" class="icon" :src="imgSrc" :width="width" :height="height" />
         <span>{{ text }}</span>
     </button>
 </template>
-
-<script>
-export default {
-    props: ['imgSrc', 'width', 'height', 'text']
-
-}
-</script>
 
 <style scoped>
 button {
@@ -24,11 +40,11 @@ button {
     justify-content: center;
 }
 
-.icon{
+.icon {
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(70deg) brightness(104%) contrast(104%);
 }
 
-span{
+span {
     color: white;
 }
 </style>
