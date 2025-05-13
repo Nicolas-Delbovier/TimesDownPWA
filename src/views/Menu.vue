@@ -51,30 +51,14 @@ const updateSelectedThemes = (message) => {
 </script>
 
 <template>
-    <div id="menu">
+    <div class="flex flex-col items-center justify-end">
         <Play @playButtonPressed="startGame" :nbCards="nbCardsToPlay" :nbTeams="nbTeams" @updateNbCards="updateNbCards"
-            @updateNbTeams="updateNbTeams" v-if="contentView === 'play'" class="content" />
+            @updateNbTeams="updateNbTeams" v-if="contentView === 'play'" class="w-full overflow-y-scroll flex-grow" />
         <ThemesSelection @useTheme="updateSelectedThemes" v-if="contentView === 'themes'" :decks="decks"
-            :selectedThemes="selectedThemes" class="content" />
-        <Modifications v-if="contentView === 'modifications'" class="content" />
-        <NavBar @menuViewChange="changeMenuView" class="nav" height="50" width="50" />
+            :selectedThemes="selectedThemes" class="w-full overflow-y-scroll flex-grow" />
+        <Modifications v-if="contentView === 'modifications'" class="w-full overflow-y-scroll flex-grow" />
     </div>
+    <NavBar @menuViewChange="changeMenuView" height="50" width="50" />
 </template>
 
-<style scoped>
-#menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-3);
-    min-width: 75vw;
-}
-
-.nav {
-    width: 75vw;
-    position: sticky;
-    bottom: 30px;
-    margin: auto;
-    margin-top: 20px;
-}
-</style>
+<style scoped></style>
