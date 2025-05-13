@@ -19,29 +19,15 @@ const backToMenu = () => {
 </script>
 
 <template>
-  <div id="window">
-    <h1>Time's Down</h1>
-    <Menu v-if="state === 'menu'" @startGame="onStartGame"></Menu>
-    <Game v-if="state === 'game'" :nbTeams="nbTeams" :words="words" @backToMenu="backToMenu"></Game>
-  </div>
+
+  <h1 v-if="state === 'menu'" class="text-3xl text-transparent text-center font-bold mt-5 mb-5
+  w-fit h-fit mx-auto
+  bg-clip-text bg-gradient-to-r from-primary-color to-accent-color">
+    Time's Down
+  </h1>
+  <Menu v-if="state === 'menu'" @startGame="onStartGame"></Menu>
+  <Game v-if="state === 'game'" :nbTeams="nbTeams" :words="words" @backToMenu="backToMenu"></Game>
+
 </template>
 
-<style scoped>
-#window {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  background-color: var(--color-3);
-}
-
-h1 {
-  text-align: center;
-  background-color: var(--color-4);
-  /* color: var(--color-3); */
-  color: #fff;
-  width: 100%;
-  margin-top: 0;
-  padding: 0.5em 0;
-}
-</style>
+<style scoped></style>
