@@ -1,39 +1,10 @@
 /* In your main CSS file (e.g., styles.css) */
 @import "tailwindcss";
 
-:root {
-  --color-1: #780000;
-  --color-2: #c1121f;
-  --color-3: #fdf0d5;
-  --color-4: #003049;
-  --color-5: #669bbc;
+@theme {
+  --color-text-color: #e9f2f3;
+  --color-background-color: #00191e;
+  --color-primary-color: #ee2e31;
+  --color-secondary-color: #16188c;
+  --color-accent-color: #46c1cf;
 }
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-.content {
-  height: 100%;
-  width: 100%;
-  /* border: 5px solid greenyellow; */
-  overflow-y: auto;
-}
-
-.base-button {
-  border-radius: 5px;
-  cursor: pointer;
-  border: 2px solid white;
-  background-color: var(--color-5);
-  color: white;
-  font-size: large;
-}
-
-.base-button:active {
-  background-color: var(--color-4);
-}
-
-/* * {
-  outline: 3px solid red;
-} */
