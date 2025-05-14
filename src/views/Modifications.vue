@@ -3,28 +3,10 @@
 </script>
 
 <template>
-    <div id="main" class="content">
-        <div id="unavailable-message">Indisponible</div>
+    <div
+        class="w-48 h-24 rounded-2xl bg-accent-color/20 flex flex-col align-self-center items-center justify-center gap-2 m-auto">
+        <span class="text-text-color font-medium">INDISPONIBLE</span>
     </div>
 </template>
 
-<style scoped>
-#main {
-    display: flex;
-    flex-direction: column;
-    padding: 2vw;
-    gap: 5px;
-    justify-content: center;
-    background-color: var(--color-3);
-    min-height: 60vh;
-    padding: auto;
-}
-
-#unavailable-message {
-    border: 5px double var(--color-1);
-    border-radius: 10px;
-    text-align: center;
-    font-size: 2rem;
-    color: var(--color-1);
-}
-</style>
+<style scoped></style>

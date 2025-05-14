@@ -51,12 +51,13 @@ const updateSelectedThemes = (message) => {
 </script>
 
 <template>
-    <div class="flex flex-col items-center justify-end">
+    <div id="menu" class="overflow-scroll no-scrollbar">
         <Play @playButtonPressed="startGame" :nbCards="nbCardsToPlay" :nbTeams="nbTeams" @updateNbCards="updateNbCards"
-            @updateNbTeams="updateNbTeams" v-if="contentView === 'play'" class="w-full overflow-y-scroll flex-grow" />
+            @updateNbTeams="updateNbTeams" v-if="contentView === 'play'"
+            class="no-scrollbar w-full overflow-y-scroll flex-grow" />
         <ThemesSelection @useTheme="updateSelectedThemes" v-if="contentView === 'themes'" :decks="decks"
-            :selectedThemes="selectedThemes" class="w-full overflow-y-scroll flex-grow" />
-        <Modifications v-if="contentView === 'modifications'" class="w-full overflow-y-scroll flex-grow" />
+            :selectedThemes="selectedThemes" class="no-scrollbar w-full overflow-y-scroll flex-grow" />
+        <Modifications v-if="contentView === 'modifications'" class="no-scrollbar w-full overflow-y-scroll flex-grow" />
     </div>
     <NavBar @menuViewChange="changeMenuView" height="50" width="50" />
 </template>

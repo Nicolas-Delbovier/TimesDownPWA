@@ -24,7 +24,7 @@ const onClick = (menuView) => {
 </script>
 
 <template>
-    <div class="fixed bottom-0 left-0 right-0 bg-background-color flex flex-row justify-around items-center py-4">
+    <div class="bg-background-color flex flex-row justify-between items-center py-4">
         <NavBarItem :class="{ 'bg-primary-color': current === 'play' }" @click="onClick('play')"
             imgSrc="/assets/gameController.svg" :width="width" :height="height" text="Jouer" />
         <NavBarItem :class="{ 'bg-primary-color': current === 'themes' }" @click="onClick('themes')"

@@ -8,3 +8,13 @@
   --color-secondary-color: #16188c;
   --color-accent-color: #46c1cf;
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
