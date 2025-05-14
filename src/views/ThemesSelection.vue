@@ -7,18 +7,12 @@ const emit = defineEmits(['useTheme']);
 </script>
 
 <template>
-    <div id="main">
-        <div v-for="deck in decks" :key="deck.theme">
+    <div id="themes-selection-menu" class="flex flex-col items-center gap-5">
+        <template v-for="deck in decks" :key="deck.theme">
             <ThemeCard @useTheme="emit('useTheme', $event)" :theme="deck.theme" :numberWords="deck.words.length"
                 :isUsed="selectedThemes[deck.theme]" />
-        </div>
+        </template>
     </div>
 </template>
 
-<style scoped>
-#main {
-    text-align: center;
-    background: rgb(188, 230, 188);
-    background-color: var(--color-3);
-}
-</style>
+<style scoped></style>
