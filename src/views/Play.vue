@@ -32,82 +32,60 @@ watch(() => props.nbCards, (newNbCards) => {
 </script>
 
 <template>
-    <div id="main">
-        <div id="nbCardsRadioButtons">
-            <h3>Nombre de cartes</h3>
-            <button @click="updateNbCards(15)"
-                :class="{ 'active-class': localNbCards === 15, 'inactive-class': localNbCards !== 15 }"
-                class="button base-button">
-                15
-            </button>
-            <button @click="updateNbCards(30)"
-                :class="{ 'active-class': localNbCards === 30, 'inactive-class': localNbCards !== 30 }"
-                class="button base-button">
-                30
-            </button>
-            <button @click="updateNbCards(45)"
-                :class="{ 'active-class': localNbCards === 45, 'inactive-class': localNbCards !== 45 }"
-                class="button base-button">
-                45
-            </button>
+    <div class="play-menu flex flex-col items-center justify-between gap-5 flex-grow mt-15">
+        <div class="flex flex-col items-center justify-center gap-5 w-full">
+            <h3 class="text-text-color font-bold">Nombre de cartes</h3>
+            <div class="flex flex-row justify-between w-full">
+                <button @click="updateNbCards(15)" :class="{
+                    'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': localNbCards === 15,
+                    'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10': localNbCards !== 15
+                }" class="text-text-color cursor-pointer w-20 h-10 rounded-4xl">
+                    15
+                </button>
+                <button @click="updateNbCards(30)" :class="{
+                    'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': localNbCards === 30,
+                    'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10': localNbCards !== 30
+                }" class="text-text-color cursor-pointer w-20 h-10 rounded-4xl">
+                    30
+                </button>
+                <button @click="updateNbCards(45)" :class="{
+                    'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': localNbCards === 45,
+                    'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10': localNbCards !== 45
+                }" class="text-text-color cursor-pointer w-20 h-10 rounded-4xl">
+                    45
+                </button>
+            </div>
         </div>
-        <div id="nbCardsTeamsButtons">
-            <h3>Nombre d'équipes</h3>
-            <button @click="updateNbTeams(2)"
-                :class="{ 'active-class': localNbTeams === 2, 'inactive-class': localNbTeams !== 2 }"
-                class="button base-button">
-                2
-            </button>
-            <button @click="updateNbTeams(3)"
-                :class="{ 'active-class': localNbTeams === 3, 'inactive-class': localNbTeams !== 3 }"
-                class="button base-button">
-                3
-            </button>
-            <button @click="updateNbTeams(4)"
-                :class="{ 'active-class': localNbTeams === 4, 'inactive-class': localNbTeams !== 4 }"
-                class="button base-button">
-                4
-            </button>
+        <div class="flex flex-col items-center justify-center gap-5 w-full">
+            <h3 class="text-text-color font-bold">Nombre d'équipes</h3>
+            <div class="flex flex-row justify-between w-full">
+                <button @click="updateNbTeams(2)" :class="{
+                    'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': localNbTeams === 2,
+                    'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10': localNbTeams !== 2
+                }" class="text-text-color cursor-pointer w-20 h-10 rounded-4xl">
+                    2
+                </button>
+                <button @click="updateNbTeams(3)" :class="{
+                    'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': localNbTeams === 3,
+                    'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10': localNbTeams !== 3
+                }" class="text-text-color cursor-pointer w-20 h-10 rounded-4xl">
+                    3
+                </button>
+                <button @click="updateNbTeams(4)" :class="{
+                    'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': localNbTeams === 4,
+                    'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10': localNbTeams !== 4
+                }" class="text-text-color cursor-pointer w-20 h-10 rounded-4xl">
+                    4
+                </button>
+            </div>
+
         </div>
 
-        <button class="button base-button" id="playButton" @click="emitPressPlayMessage">
-            Jouer
+        <button class="bg-primary-color text-text-color hover:bg-primary-color/80 active:bg-primary-color/80 cursor-pointer
+        font-bold py-6 px-18 rounded-xl" id="start-game-button" @click="emitPressPlayMessage">
+            JOUER
         </button>
     </div>
 </template>
 
-<style scoped>
-#main {
-    text-align: center;
-    display: flex;
-    background-color: var(--color-3);
-    flex-direction: column;
-}
-
-.button {
-    margin: 1vh 5vw;
-    padding: 1rem;
-}
-
-.active-class {
-    background-color: var(--color-4);
-}
-
-.inactive-class {
-    background-color: var(--color-5);
-}
-
-#playButton {
-    margin: 5vh 5vw;
-    font-weight: bold;
-    font-size: large;
-    padding: 3vh;
-    border: 5px solid white;
-}
-
-#nbCardsRadioButtons,
-#nbCardsTeamsButtons {
-    display: flex;
-    flex-direction: column;
-}
-</style>
+<style scoped></style>
