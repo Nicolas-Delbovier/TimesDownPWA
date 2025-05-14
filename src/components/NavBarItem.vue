@@ -22,7 +22,7 @@ defineProps({
 </script>
 
 <template>
-    <button class="flex flex-col items-center justify-center gap-3">
+    <button class="flex flex-col items-center justify-between gap-3">
         <img alt="NavBar icon" class="icon" :src="imgSrc" :width="width" :height="height" />
         <span class="text-text-color">{{ text }}</span>
     </button>
