@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onBeforeUnmount, defineProps, defineEmits } from 'vue';
+import { ref, reactive, computed, onBeforeUnmount } from 'vue';
 
 const emit = defineEmits(['backToMenu']);
 const props = defineProps(['nbTeams', 'words']);
@@ -16,6 +16,21 @@ const DISABLED_BUTTON_DURATION_SEC = 2;
 const timeoutIds = ref([]);
 const isNextTeamButtonDisabled = ref(true);
 const isScoresButtonDisabled = ref(true);
+
+const roundTypeLabel = computed(() => {
+  switch (round.value) {
+    case 1:
+      return 'Mots interdits';
+    case 2:
+      return 'Mot unique';
+    case 3:
+      return 'Mime';
+  }
+});
+
+const winnerTeamIndex = computed(() => {
+  return scores.indexOf(Math.max(...scores));
+})
 
 const startRound = () => {
   nextTeam();
@@ -109,157 +124,139 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="content">
-    <div v-if="state === 'inter-round'" class="game-view">
-      <div id="round-title">Manche {{ round }}</div>
-      <div v-if="round === 1" class="info">
-        Vous devez faire deviner le mot en utilisant tous les mots que vous
-        souhaitez du moment qu'ils ne "sonnent" pas de la même façon (ex: ne pas
-        dire "maisonette" pour faire deviner "maison"). Votre équipe a autant
-        d'essais qu'elle le souhaite pour deviner le mot mais vous ne pouvez pas
-        passer de mot. Les mimes ne sont pas autorisés durant cette manche.
-      </div>
-      <div v-if="round === 2" class="info">
-        Vous devez faire deviner le mot en utilisant un unique mot. Si la
-        proposition de votre équipe est fausse, vous devez passer la carte.
-      </div>
-      <div v-if="round === 3" class="info">
-        Vous devez faire deviner le mot en utilisant des mimes uniquement. Une
+
+  <div v-if="state === 'inter-round'" class="flex flex-col items-center justify-between h-full text-text-color">
+    <div id="round-title" class="flex flex-col items-center justify-center mt-8">
+      <span class="font-medium text-3xl ">
+        Manche {{ round }}
+      </span>
+      <span class="mt-1">
+        ({{ roundTypeLabel }})
+      </span>
+    </div>
+    <div class="bg-accent-color/20 p-4 rounded-xl font-medium">
+      <span v-if="round === 1">
+        L'objectif est de faire deviner le mot cible à votre équipe en utilisant autant de mots que vous le souhaitez.
+        La seule contrainte est de ne pas utiliser de mots qui ont une sonorité similaire au mot à deviner (par exemple,
+        pour faire deviner "livre", évitez "livret"). Votre équipe a un nombre illimité de tentatives pour deviner le
+        mot. Cependant, il est interdit de passer une carte et le mime n'est pas autorisé.
+      </span>
+      <span v-if="round === 2">
+        Pour cette manche, vous disposez d'un seul mot pour faire deviner le mot cible à votre équipe. Si votre équipe
+        ne devine pas correctement, la carte doit être passée.
+      </span>
+      <span v-if="round === 3">
+        Ici, seul le mime est autorisé pour faire deviner le mot cible. A nouveau, votre équipe n'a droit qu'à une
         seule proposition par carte.
-      </div>
-      <button class="base-button" @click="startRound">Compris !</button>
+      </span>
     </div>
 
-    <div v-if="state === 'next-team'" class="game-view">
-      <div class="info">Tour de l'équipe {{ currentTeam + 1 }}.</div>
-      <button :disabled="isNextTeamButtonDisabled" :class="[
-        'base-button',
-        { 'disabled-button': isNextTeamButtonDisabled },
-      ]" @click="startNextTeamTurn">
-        Jouer
-      </button>
+    <button class="bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80 cursor-pointer
+        font-bold py-6 px-18 rounded-xl mb-16" @click="startRound">COMPRIS !</button>
+  </div>
+
+  <div v-if="state === 'next-team'" class="flex flex-col items-center justify-between h-full text-text-color">
+    <!-- REMOVE CODE DUPLICATION------------------------------------------------- -->
+    <div id="round-title" class="flex flex-col items-center justify-center mt-8">
+      <span class="font-medium text-3xl ">
+        Manche {{ round }}
+      </span>
+      <span class="mt-1">
+        ({{ roundTypeLabel }})
+      </span>
     </div>
-
-    <div v-if="state === 'inside-round'" class="game-view">
-      <div id="current-word">
-        {{ currentWords[currentWordIndex] }}
-      </div>
-      <div>{{ remainingTime }} secondes</div>
-      <div id="action-buttons">
-        <button class="base-button" @click="skipWord">Passer</button>
-        <button class="base-button" @click="validateWord">Valider</button>
-      </div>
+    <!-- --------------------------------------------------------------------------------- -->
+    <div class="bg-accent-color/20 font-medium py-6 px-18 rounded-xl">
+      Tour de l'équipe {{ currentTeam + 1 }}.
     </div>
+    <button :disabled="isNextTeamButtonDisabled" class="cursor-pointer font-bold py-6 px-18 rounded-xl mb-16" :class="{
+      'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': !isNextTeamButtonDisabled,
+      'bg-primary-color/20 hover:bg-primary-color/10 active:bg-primary-color/10': isNextTeamButtonDisabled
+    }" @click="startNextTeamTurn">
+      Jouer
+    </button>
+  </div>
 
-    <div v-if="state === 'scores'" class="game-view">
-      <table id="scores-table">
-        <thead>
-          <tr>
-            <th>Equipe</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(score, index) in scores.slice(0, nbTeams)" :key="index">
-            <td>{{ index + 1 }}</td>
-            <td>{{ score }}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <button v-if="round <= 3" class="base-button" @click="nextTeam" :disabled="isScoresButtonDisabled"
-        :class="['base-button', { 'disabled-button': isScoresButtonDisabled }]">
-        Continuer
-      </button>
-      <button v-if="round > 3" class="base-button" @click="backToMenu" :disabled="isScoresButtonDisabled"
-        :class="['base-button', { 'disabled-button': isScoresButtonDisabled }]">
-        Retour au menu
-      </button>
+  <div v-if="state === 'inside-round'" class="flex flex-col items-center justify-between h-full text-text-color">
+    <!-- REMOVE CODE DUPLICATION------------------------------------------------- -->
+    <div id="round-title" class="flex flex-col items-center justify-center mt-8">
+      <span class="font-medium text-3xl ">
+        Manche {{ round }}
+      </span>
+      <span class="mt-1">
+        ({{ roundTypeLabel }})
+      </span>
+    </div>
+    <!-- --------------------------------------------------------------------------------- -->
+    <div id="current-word" class="bg-accent-color/60 font-medium py-12 px-18 rounded-xl">
+      {{ currentWords[currentWordIndex] }}
+    </div>
+    <div>{{ remainingTime }} secondes</div>
+    <div id="action-buttons" class="flex flex-row gap-4 justify-evenly">
+      <button
+        class="cursor-pointer font-bold py-6 px-12 rounded-xl mb-16 bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10"
+        @click="skipWord">Passer</button>
+      <button
+        class="cursor-pointer font-bold py-6 px-12 rounded-xl mb-16 bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80"
+        @click="validateWord">Valider</button>
     </div>
   </div>
+
+  <div v-if="state === 'scores'" class="flex flex-col items-center justify-between h-full text-text-color">
+    <!-- REMOVE CODE DUPLICATION------------------------------------------------- -->
+    <div id="round-title" class="flex flex-col items-center justify-center mt-8">
+      <template v-if="round <= 3">
+        <span class="font-medium text-3xl ">
+          Manche {{ round }}
+        </span>
+        <span class="mt-1">
+          ({{ roundTypeLabel }})
+        </span>
+      </template>
+
+      <template v-if="round > 3">
+        <span class="font-medium text-3xl ">
+          Fin de Partie
+        </span>
+      </template>
+    </div>
+    <!-- --------------------------------------------------------------------------------- -->
+
+    <div class="rounded-lg overflow-hidden shadow-md" id="example-table">
+      <div class="bg-accent-color/60 flex ">
+        <div class="px-4 py-2 font-semibold ">Equipe</div>
+        <div class="px-4 py-2 font-semibold ">Score</div>
+      </div>
+      <div class="flex bg-accent-color/20 justify-center" v-for="(score, index) in scores.slice(0, nbTeams)"
+        :key="index">
+        <div :class="{ 'bg-primary-color/40': index === winnerTeamIndex }" class="w-full px-4 py-2 text-center">{{
+          index + 1
+        }}
+        </div>
+        <div :class="{ 'bg-primary-color/40': index === winnerTeamIndex }"
+          class="w-full px-4 py-2 border-l-1 border-text-color text-center">{{ score }}</div>
+      </div>
+
+    </div>
+
+    <button v-if="round <= 3" :disabled="isScoresButtonDisabled"
+      class="cursor-pointer font-bold py-6 px-18 rounded-xl mb-16" :class="{
+        'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': !isScoresButtonDisabled,
+        'bg-primary-color/20 hover:bg-primary-color/10 active:bg-primary-color/10': isScoresButtonDisabled
+      }" @click="nextTeam">
+      CONTINUER
+    </button>
+
+    <button v-if="round > 3" :disabled="isScoresButtonDisabled"
+      class="cursor-pointer font-bold py-6 px-18 rounded-xl mb-16" :class="{
+        'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': !isScoresButtonDisabled,
+        'bg-primary-color/20 hover:bg-primary-color/10 active:bg-primary-color/10': isScoresButtonDisabled
+      }" @click="backToMenu">
+      RETOUR AU MENU
+    </button>
+
+  </div>
+
 </template>
 
-<style scoped>
-#round-title {
-  font-size: 3rem;
-}
-
-.info {
-  border: 2px solid white;
-  margin: auto;
-  background-color: var(--color-5);
-  border-radius: 1rem;
-  color: white;
-  padding: 1rem;
-  font-size: 1.5rem;
-}
-
-#scores-table {
-  margin: auto;
-  padding: 1rem;
-  font-size: large;
-}
-
-table {
-  width: 80%;
-  border-collapse: collapse;
-  color: white;
-}
-
-th,
-td {
-  border: 3px solid #fff;
-  /* Black border for table cells */
-  padding: 2vh;
-  text-align: left;
-  font-size: large;
-}
-
-th {
-  background-color: var(--color-4);
-  /* Light gray background for header */
-}
-
-tr {
-  background-color: var(--color-5);
-  /* Light gray background for even rows */
-}
-
-#current-word {
-  margin: 3vw 3vw;
-  min-width: 50vw;
-  font-size: 3rem;
-  flex-grow: 1;
-  padding: auto;
-  text-align: center;
-}
-
-.game-view {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--color-3);
-  min-height: 80vh;
-  margin: auto 3vw;
-}
-
-#action-buttons {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  gap: 5vw;
-}
-
-button {
-  padding: 5vh 15vw;
-}
-
-.disabled-button {
-  background-color: #717171;
-}
-
-#inter-round {
-  display: flex;
-  flex-direction: column;
-}
-</style>
+<style scoped></style>
