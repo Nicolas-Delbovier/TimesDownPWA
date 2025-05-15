@@ -25,11 +25,12 @@ const onClick = (menuView) => {
 
 <template>
     <div id="nav-bar" class="bg-background-color flex flex-row justify-between items-center py-4">
-        <NavBarItem class="h-full" :class="{ 'bg-primary-color': current === 'play' }" @click="onClick('play')"
-            imgSrc="/assets/playMenuIcon.svg" :width="width" :height="height" text="Jouer" />
-        <NavBarItem class="h-full" :class="{ 'bg-primary-color': current === 'themes' }" @click="onClick('themes')"
-            imgSrc="/assets/themesMenuIcon.svg" :width="width" :height="height" text="Thèmes" />
-        <NavBarItem class="h-full" :class="{ 'bg-primary-color': current === 'modifications' }"
+        <NavBarItem class="h-full" :iconBackgroundClass="current === 'play' ? 'bg-primary-color' : ''"
+            @click="onClick('play')" imgSrc="/assets/playMenuIcon.svg" :width="width" :height="height" text="Jouer" />
+        <NavBarItem class="h-full" :iconBackgroundClass="current === 'themes' ? 'bg-primary-color' : ''"
+            @click="onClick('themes')" imgSrc="/assets/themesMenuIcon.svg" :width="width" :height="height"
+            text="Thèmes" />
+        <NavBarItem class="h-full" :iconBackgroundClass="current === 'modifications' ? 'bg-primary-color' : ''"
             @click="onClick('modifications')" imgSrc="/assets/modificationsMenuIcon.svg" :width="width" :height="height"
             text="Modifier" />
     </div>

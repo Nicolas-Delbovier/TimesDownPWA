@@ -59,7 +59,7 @@ const updateSelectedThemes = (message) => {
             :selectedThemes="selectedThemes" class="no-scrollbar w-full overflow-y-scroll" />
         <Modifications v-if="contentView === 'modifications'" class="no-scrollbar w-full overflow-y-scroll" />
     </div>
-    <NavBar @menuViewChange="changeMenuView" height="50" width="50" />
+    <NavBar @menuViewChange="changeMenuView" height="25" width="25" />
 </template>
 
 <style scoped></style>

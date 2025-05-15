@@ -18,12 +18,19 @@ defineProps({
         type: String,
         default: '',
     },
+    iconBackgroundClass: {
+        type: String,
+        default: '',
+    },
+
 });
 </script>
 
 <template>
     <button class="flex flex-col items-center justify-between gap-3">
-        <img alt="NavBar icon" class="icon" :src="imgSrc" :width="width" :height="height" />
+        <div class="rounded-4xl px-4 py-1" :class="iconBackgroundClass">
+            <img alt="NavBar icon" :src="imgSrc" :width="width" :height="height" />
+        </div>
         <span class="text-text-color">{{ text }}</span>
     </button>
 </template>
