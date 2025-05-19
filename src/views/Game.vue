@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive, computed, onBeforeUnmount } from 'vue';
+import GameHeading from '@/components/GameHeading.vue';
 
 const emit = defineEmits(['backToMenu']);
 const props = defineProps(['nbTeams', 'words']);
@@ -130,14 +131,7 @@ onBeforeUnmount(() => {
 <template>
 
   <div v-if="state === 'inter-round'" class="flex flex-col items-center justify-between h-full text-text-color">
-    <div id="round-title" class="flex flex-col items-center justify-center mt-8">
-      <span class="font-medium text-3xl ">
-        Manche {{ round }}
-      </span>
-      <span class="mt-1">
-        ({{ roundTypeLabel }})
-      </span>
-    </div>
+    <GameHeading :round="round" :round-type-label="roundTypeLabel" />
     <div class="bg-accent-color/20 p-4 rounded-xl font-medium">
       <span v-if="round === 1">
         L'objectif est de faire deviner le mot cible à votre équipe en utilisant autant de mots que vous le souhaitez.
@@ -160,16 +154,7 @@ onBeforeUnmount(() => {
   </div>
 
   <div v-if="state === 'next-team'" class="flex flex-col items-center justify-between h-full text-text-color">
-    <!-- REMOVE CODE DUPLICATION------------------------------------------------- -->
-    <div id="round-title" class="flex flex-col items-center justify-center mt-8">
-      <span class="font-medium text-3xl ">
-        Manche {{ round }}
-      </span>
-      <span class="mt-1">
-        ({{ roundTypeLabel }})
-      </span>
-    </div>
-    <!-- --------------------------------------------------------------------------------- -->
+    <GameHeading :round="round" :round-type-label="roundTypeLabel" />
     <div class="bg-accent-color/20 font-medium py-6 px-18 rounded-xl">
       Tour de l'équipe {{ currentTeam + 1 }}.
     </div>
@@ -182,16 +167,7 @@ onBeforeUnmount(() => {
   </div>
 
   <div v-if="state === 'inside-round'" class="flex flex-col items-center justify-between h-full text-text-color">
-    <!-- REMOVE CODE DUPLICATION------------------------------------------------- -->
-    <div id="round-title" class="flex flex-col items-center justify-center mt-8">
-      <span class="font-medium text-3xl ">
-        Manche {{ round }}
-      </span>
-      <span class="mt-1">
-        ({{ roundTypeLabel }})
-      </span>
-    </div>
-    <!-- --------------------------------------------------------------------------------- -->
+    <GameHeading :round="round" :round-type-label="roundTypeLabel" />
     <div id="current-word" class="bg-accent-color/60 font-medium py-12 px-18 rounded-xl">
       {{ currentWords[currentWordIndex] }}
     </div>
@@ -207,24 +183,7 @@ onBeforeUnmount(() => {
   </div>
 
   <div v-if="state === 'scores'" class="flex flex-col items-center justify-between h-full text-text-color">
-    <!-- REMOVE CODE DUPLICATION------------------------------------------------- -->
-    <div id="round-title" class="flex flex-col items-center justify-center mt-8">
-      <template v-if="round <= 3">
-        <span class="font-medium text-3xl ">
-          Manche {{ round }}
-        </span>
-        <span class="mt-1">
-          ({{ roundTypeLabel }})
-        </span>
-      </template>
-
-      <template v-if="round > 3">
-        <span class="font-medium text-3xl ">
-          Fin de Partie
-        </span>
-      </template>
-    </div>
-    <!-- --------------------------------------------------------------------------------- -->
+    <GameHeading :round="round" :round-type-label="roundTypeLabel" />
 
     <div class="rounded-lg overflow-hidden shadow-md" id="example-table">
       <div class="bg-accent-color/60 flex ">
