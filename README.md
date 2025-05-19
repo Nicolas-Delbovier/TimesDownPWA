@@ -1,29 +1,28 @@
-# TimesOver
+# TimesDown
 
-This template should help get you started developing with Vue 3 in Vite.
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL--3.0-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
-## Recommended IDE Setup
+This project is a PWA that implements the game **Time's Up**.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+<div style="overflow-x: auto; white-space: nowrap;">
+  <img src="img/play_menu.png" alt="Play menu screenshot" width="300">
+  <img src="img/themes_selection.png" alt="Themes selection menu screenshot" width="300">
+  <img src="img/game.png" alt="Game screenshot" width="300">
+  <img src="img/scores.png" alt="Scores screenshot" width="300">
+</div>
 
-## Customize configuration
+## Installation
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+As a PWA, this application can be installed on your phone. The most simple way to do this is to use [ngrok](https://ngrok.com/) along with the "serve" npm package.
 
-## Project Setup
+Install ngrok from their website and install the "serve" package from npm with `npm install -g serve` (the g flag is there to install this package globally). Then, simply run `npm run serve` in the root of this project to start serving the app on your network and finally run `ngrok http <port_number>` to make your app available online.
 
-```sh
-npm install
-```
+Then you can access the app on the url given by ngrok. While on the app's page, you can go to the settings of your browser and look for some menu like "add to home screen".
 
-### Compile and Hot-Reload for Development
+## Version History
 
-```sh
-npm run dev
-```
+For a detailed list of changes in each version, please refer to the [CHANGELOG.md](CHANGELOG.md) file.
 
-### Compile and Minify for Production
+## License
 
-```sh
-npm run build
-```
+This project is licensed under the [GNU Lesser General Public License v3.0](https://www.gnu.org/licenses/lgpl-3.0.html).
