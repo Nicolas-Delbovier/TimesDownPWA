@@ -33,17 +33,25 @@ const winnerTeamIndex = computed(() => {
 })
 
 const startRound = () => {
-  nextTeam();
+  showTeamTurn(false);
   currentWords.value = [...props.words].sort(() => 0.5 - Math.random());
 };
 
-const nextTeam = () => {
+const showTeamTurn = (nextTeam = true) => {
+  if (nextTeam) {
+    currentTeam.value = (currentTeam.value + 1) % props.nbTeams;
+  }
   state.value = 'next-team';
   isNextTeamButtonDisabled.value = true;
   const timeoutId = setTimeout(() => {
     isNextTeamButtonDisabled.value = false;
   }, 1000 * DISABLED_BUTTON_DURATION_SEC);
 };
+
+const nextRound = (() => {
+  round.value++;
+  showTeamTurn(true); // team switch when there is a new round
+})
 
 const showScores = () => {
   isScoresButtonDisabled.value = true;
@@ -71,16 +79,12 @@ const validateWord = () => {
   // When we are at the end of the round
   if (currentWords.value.length === 0) {
     currentWords.value = [...props.words];
-    round.value++;
     showScores();
 
     // Clear timeouts to reset timer for next round
     timeoutIds.value.forEach(clearTimeout);
     timeoutIds.value = [];
     remainingTime.value = TIME;
-  }
-  if (round.value === 4) {
-    showScores();
   }
 };
 
@@ -94,7 +98,7 @@ const startTimer = () => {
       currentTeam.value = (currentTeam.value + 1) % props.nbTeams;
       currentWordIndex.value =
         (currentWordIndex.value + 1) % currentWords.value.length;
-      nextTeam();
+      showTeamTurn(false);
     }
     remainingTime.value = 30;
   }, nbSeconds * 1000);
@@ -239,15 +243,15 @@ onBeforeUnmount(() => {
 
     </div>
 
-    <button v-if="round <= 3" :disabled="isScoresButtonDisabled"
+    <button v-if="round < 3" :disabled="isScoresButtonDisabled"
       class="cursor-pointer font-bold py-6 px-18 rounded-xl mb-16" :class="{
         'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': !isScoresButtonDisabled,
         'bg-primary-color/20 hover:bg-primary-color/10 active:bg-primary-color/10': isScoresButtonDisabled
-      }" @click="nextTeam">
+      }" @click="nextRound">
       CONTINUER
     </button>
 
-    <button v-if="round > 3" :disabled="isScoresButtonDisabled"
+    <button v-if="round >= 3" :disabled="isScoresButtonDisabled"
       class="cursor-pointer font-bold py-6 px-18 rounded-xl mb-16" :class="{
         'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80': !isScoresButtonDisabled,
         'bg-primary-color/20 hover:bg-primary-color/10 active:bg-primary-color/10': isScoresButtonDisabled
