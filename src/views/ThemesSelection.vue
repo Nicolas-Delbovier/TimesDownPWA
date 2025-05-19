@@ -1,6 +1,5 @@
 <script setup>
 import ThemeCard from '@/components/ThemeCard.vue';
-import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps(['decks', 'selectedThemes']);
 const emit = defineEmits(['useTheme']);

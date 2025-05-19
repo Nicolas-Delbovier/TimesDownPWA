@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, defineAsyncComponent, defineEmits } from 'vue';
+import { ref, defineAsyncComponent } from 'vue';
 import jsonData from '../../data/data.json';
 
 // Import components using defineAsyncComponent for potential performance benefits
