@@ -5,10 +5,10 @@
 This project is a PWA that implements the game **Time's Up**.
 
 <div style="overflow-x: auto; white-space: nowrap;">
-  <img src="img/play_menu.png" alt="Play menu screenshot" width="300">
-  <img src="img/themes_selection.png" alt="Themes selection menu screenshot" width="300">
-  <img src="img/game.png" alt="Game screenshot" width="300">
-  <img src="img/scores.png" alt="Scores screenshot" width="300">
+  <img src="public/img/screenshots/play_menu-portrait.png" alt="Play menu screenshot" width="300">
+  <img src="public/img/screenshots/themes_selection-portrait.png" alt="Themes selection menu screenshot" width="300">
+  <img src="public/img/screenshots/game-portrait.png" alt="Game screenshot" width="300">
+  <img src="public/img/screenshots/scores-portrait.png" alt="Scores screenshot" width="300">
 </div>
 
 ## Installation
