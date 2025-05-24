@@ -2,7 +2,7 @@
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL--3.0-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
-This project is a PWA that implements the game **Time's Up**.
+This project is a PWA that implements the game **Time's Up** in French.
 
 <div style="overflow-x: auto; white-space: nowrap;">
   <img src="public/img/screenshots/play_menu-portrait.png" alt="Play menu screenshot" width="300">
@@ -11,13 +11,36 @@ This project is a PWA that implements the game **Time's Up**.
   <img src="public/img/screenshots/scores-portrait.png" alt="Scores screenshot" width="300">
 </div>
 
-## Installation
+## PWA Installation Guide
 
-As a PWA, this application can be installed on your phone. The most simple way to do this is to use [ngrok](https://ngrok.com/) along with the "serve" npm package.
+This application is built as a **Progressive Web App (PWA)**, which means you can install it directly onto your device, whether it's a phone or a computer. For development and testing purposes, the most straightforward installation method involves using **ngrok** and the **`serve` npm package**.
 
-Install ngrok from their website and install the "serve" package from npm with `npm install -g serve` (the g flag is there to install this package globally). Then, simply run `npm run serve` in the root of this project to start serving the app on your network and finally run `ngrok http <port_number>` to make your app available online.
+Here's how to install the PWA:
 
-Then you can access the app on the url given by ngrok. While on the app's page, you can go to the settings of your browser and look for some menu like "add to home screen".
+1.  **Download ngrok:** Visit the [ngrok website](https://ngrok.com/) and follow their instructions to install it on your system.
+2.  **Install the `serve` package:** Open your command line or terminal and run `npm install -g serve`. The `-g` stands for "global," allowing you to use `serve` from any directory.
+3.  **Start the local server:** Navigate to the root folder of this project in your terminal. Then, run `npm run serve`. This command will start a local web server for the application.
+4.  **Expose your app online with ngrok:** In your terminal, run `ngrok http <port_number>`. Replace `<port_number>` with the port number that the `npm run serve` command indicated (e.g., 3000, 5000). Ngrok will provide a temporary public URL for your application.
+
+Finally, open the URL provided by ngrok in your web browser. While viewing the application, go into your browser's settings or menu (often represented by three dots or lines) and look for an option like "Add to Home Screen," "Install app," or "Download app" to install the PWA.
+
+### Phone
+
+<div style="overflow-x: auto; white-space: nowrap;">
+  <img src="public/img/screenshots/ngrok_visit_site.jpg" alt="Ngrok visit site screenshot" width="300">
+  <img src="public/img/screenshots/chrome_phone_3dots.jpg" alt="Chrome open settings menu screenshot" width="300">
+  <img src="public/img/screenshots/chrome_phone_add_to_home_screen.jpg" alt="Chrome add to home screen screenshot" width="300">
+</div>
+
+#### ⚠️ Known install issue ⚠️
+
+If your browser only offers to create a shortcut instead of prompting to install the PWA, ensure you have only one browser tab open with the ngrok link. Some in-app browsers, like the one in Facebook Messenger, might prevent proper PWA installation. If you opened the link this way, close that browser and open the ngrok link directly in your main browser (e.g., Chrome).
+
+<img src="public/img/screenshots/facebook_browser_leave.jpg" alt="Leave Facebook browser screenshot" width="300">
+
+### Computer
+
+<img src="public/img/screenshots/computer_install.png" alt="Leave Facebook browser screenshot" width="300">
 
 ## Version History
 
