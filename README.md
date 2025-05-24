@@ -1,6 +1,6 @@
 # TimesDown
 
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL--3.0-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 This project is a PWA that implements the game **Time's Up** in French.
 
@@ -48,4 +48,4 @@ For a detailed list of changes in each version, please refer to the [CHANGELOG.m
 
 ## License
 
-This project is licensed under the [GNU Lesser General Public License v3.0](https://www.gnu.org/licenses/lgpl-3.0.html).
+This project is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html).
