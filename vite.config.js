@@ -19,6 +19,7 @@ export default defineConfig({
         short_name: "Time's Down",
         description: "Implementation of Time's Up game into a web app",
         theme_color: "#00191e",
+        background_color: "#00191e",
         display: 'standalone',
         start_url: '.',
         icons: [
