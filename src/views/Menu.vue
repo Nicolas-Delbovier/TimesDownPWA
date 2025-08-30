@@ -37,8 +37,7 @@ const startGame = () => {
         }
     }
     allWords.sort(() => 0.5 - Math.random());
-    allWords = allWords.slice(0, nbCardsToPlay.value);
-    emit('startGame', { words: allWords, nbTeams: nbTeams.value });
+    emit('startGame', { words:  allWords.slice(0, nbCardsToPlay.value), nbTeams: nbTeams.value });
 };
 
 const changeMenuView = (message) => {
