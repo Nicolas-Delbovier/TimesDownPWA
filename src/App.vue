@@ -20,7 +20,7 @@ const backToMenu = () => {
 
 <template>
 
-  <h1 v-if="state === 'menu'" class="text-3xl text-transparent text-center font-bold mt-5 mb-5
+  <h1 v-if="state === 'menu'" class="text-3xl text-transparent text-center font-bold pt-5
   w-fit h-fit mx-auto
   bg-clip-text bg-gradient-to-r from-primary-color to-accent-color">
     Time's Down
