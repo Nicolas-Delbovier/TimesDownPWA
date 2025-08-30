@@ -18,3 +18,8 @@
     scrollbar-width: none;
   }
 }
+
+body {
+  height: var(--app-height);
+  overscroll-behavior-y: contain;
+}
