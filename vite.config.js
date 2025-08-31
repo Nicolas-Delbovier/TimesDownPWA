@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     vue(),
-    vueDevTools(),
+    // vueDevTools(),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["assets/modificationsMenuIcon.svg", "assets/playMenuIcon.svg", "assets/themesMenuIcon.svg"],

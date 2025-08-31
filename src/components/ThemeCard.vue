@@ -29,11 +29,11 @@ const shiftUse = () => {
 <template>
     <div id="theme-card"
         :class="{ 'bg-primary-color/80 hover:bg-primary-color/60 active:bg-primary-color/60': use, 'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10': !use }"
-        class="flex flex-col items-center text-text-color cursor-pointer w-full h-60 rounded-2xl px-2 pt-2 pb-4 gap-2 justify-between"
+        class="flex flex-col items-center text-text-color cursor-pointer px-2 pt-2 pb-4 gap-2 rounded-2xl w-11/12"
         @click="shiftUse">
-        <h2 class="text-lg font-medium">{{ theme }}</h2>
+        <span id="card-title" class="text-center text-lg font-medium">{{ theme }}</span>
         <!-- <span>Nombres de mots : {{ numberWords }}</span> -->
-        <button class="text-text-color cursor-pointer w-50 h-8 rounded-4xl m-auto border-2 border-text-color"
+        <button class="text-text-color cursor-pointer p-2 border-2 border-text-color rounded-4xl"
             :class="{ 'bg-primary-color': use, 'bg-accent-color/10': !use }">
             {{ use ? "Sélectionné" : "Non sélectionné" }}
         </button>

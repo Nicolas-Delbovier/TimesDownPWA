@@ -20,6 +20,10 @@
 }
 
 body {
-  height: var(--app-height);
   overscroll-behavior-y: contain;
+}
+
+#app{
+  height: 100vh;
+  width: 80vw;
 }
