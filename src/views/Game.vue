@@ -131,7 +131,7 @@ onBeforeUnmount(() => {
 <template>
 
   <div v-if="state === 'inter-round'" class="flex flex-col items-center justify-between h-full text-text-color">
-    <GameHeading :round="round" :round-type-label="roundTypeLabel" />
+    <GameHeading :round="round" :round-type-label="roundTypeLabel" @homeBtnClick="backToMenu" />
     <div class="bg-accent-color/20 p-4 rounded-xl font-medium">
       <span v-if="round === 1">
         L'objectif est de faire deviner le mot cible à votre équipe en utilisant autant de mots que vous le souhaitez.
@@ -154,7 +154,7 @@ onBeforeUnmount(() => {
   </div>
 
   <div v-if="state === 'next-team'" class="flex flex-col items-center justify-between h-full text-text-color">
-    <GameHeading :round="round" :round-type-label="roundTypeLabel" />
+    <GameHeading :round="round" :round-type-label="roundTypeLabel" @homeBtnClick="backToMenu" />
     <div class="bg-accent-color/20 font-medium py-6 px-18 rounded-xl">
       Tour de l'équipe {{ currentTeam + 1 }}.
     </div>
@@ -167,7 +167,7 @@ onBeforeUnmount(() => {
   </div>
 
   <div v-if="state === 'inside-round'" class="flex flex-col items-center justify-between h-full text-text-color">
-    <GameHeading :round="round" :round-type-label="roundTypeLabel" />
+    <GameHeading :round="round" :round-type-label="roundTypeLabel" @homeBtnClick="backToMenu" />
     <div id="current-word" class="bg-accent-color/60 font-medium py-12 px-18 rounded-xl">
       {{ currentWords[currentWordIndex] }}
     </div>
@@ -183,7 +183,7 @@ onBeforeUnmount(() => {
   </div>
 
   <div v-if="state === 'scores'" class="flex flex-col items-center justify-between h-full text-text-color">
-    <GameHeading :round="round" :round-type-label="roundTypeLabel" />
+    <GameHeading :round="round" :round-type-label="roundTypeLabel" @homeBtnClick="backToMenu" />
 
     <div class="rounded-lg overflow-hidden shadow-md" id="example-table">
       <div class="bg-accent-color/60 flex ">
