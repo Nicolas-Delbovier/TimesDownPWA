@@ -13,7 +13,7 @@ export default defineConfig({
     // vueDevTools(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["assets/modificationsMenuIcon.svg", "assets/playMenuIcon.svg", "assets/themesMenuIcon.svg"],
+      includeAssets: ["assets/modificationsMenuIcon.svg", "assets/playMenuIcon.svg", "assets/themesMenuIcon.svg", "assets/home.svg"],
       manifest: {
         name: "Time's Down",
         short_name: "Time's Down",
