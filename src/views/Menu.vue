@@ -11,15 +11,11 @@ const emit = defineEmits(['startGame']);
 
 const contentView = ref('play');
 const decks = ref([]);
-const selectedThemes = ref({});
 
 onMounted(() => {
   decks.value = deckService.getDecks();
-  selectedThemes.value = decks.value.reduce((acc, deck) => {
-    acc[deck.theme] = true;
-    return acc;
-  }, {});
 });
+
 const nbCardsToPlay = ref(30);
 const nbTeams = ref(2);
 
@@ -34,7 +30,7 @@ const updateNbTeams = (message) => {
 const startGame = () => {
   let allWords = [];
   for (const deck of decks.value) {
-    if (selectedThemes.value[deck.theme]) {
+    if (deck.use) {
       allWords = allWords.concat(deck.words);
     }
   }
@@ -47,7 +43,11 @@ const changeMenuView = (message) => {
 };
 
 const updateSelectedThemes = (message) => {
-  selectedThemes.value[message.theme] = message.use;
+  const deck = decks.value.find((d) => d.title === message.title);
+  if (deck) {
+    deck.use = message.use;
+    deckService.saveDecks(decks.value);
+  }
 };
 </script>
 
@@ -66,7 +66,6 @@ const updateSelectedThemes = (message) => {
       @useTheme="updateSelectedThemes"
       v-if="contentView === 'themes'"
       :decks="decks"
-      :selectedThemes="selectedThemes"
       class="no-scrollbar w-full overflow-y-scroll"
     />
   </div>

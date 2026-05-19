@@ -2,7 +2,7 @@
 import { inject } from 'vue';
 import ThemeCard from '@/components/ThemeCard.vue';
 
-const props = defineProps(['decks', 'selectedThemes']);
+const props = defineProps(['decks']);
 const emit = defineEmits(['useTheme']);
 
 const triggerEditTheme = inject('triggerEditTheme');
@@ -12,11 +12,11 @@ const triggerEditTheme = inject('triggerEditTheme');
   <div id="themes-selection-menu" class="flex flex-col items-center gap-5 mt-5">
     <ThemeCard
       v-for="deck in decks"
-      :key="deck.theme"
+      :key="deck.title"
       @useTheme="emit('useTheme', $event)"
-      :theme="deck.theme"
+      :title="deck.title"
       :numberWords="deck.words.length"
-      :isUsed="selectedThemes[deck.theme]"
+      :isUsed="deck.use"
     />
 
     <button

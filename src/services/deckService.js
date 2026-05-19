@@ -1,4 +1,4 @@
-import jsonData from '../../data/data.json';
+import jsonData from '../../data/decks.json';
 
 const STORAGE_KEY = 'timesdown_decks';
 
@@ -13,8 +13,7 @@ export const deckService = {
       }
     }
 
-    // Fallback to default data
-    const defaultDecks = jsonData.decks;
+    const defaultDecks = jsonData;
     this.saveDecks(defaultDecks);
     return defaultDecks;
   },
@@ -25,22 +24,25 @@ export const deckService = {
 
   saveDeck(deck) {
     const decks = this.getDecks();
-    const index = decks.findIndex((d) => d.theme === deck.theme);
+    const index = decks.findIndex((d) => d.title === deck.title);
     if (index !== -1) {
       decks[index] = deck;
     } else {
+      // For new decks, ensure metadata is set
+      deck.use = deck.use ?? true;
+      deck.isUserGenerated = deck.isUserGenerated ?? true;
       decks.push(deck);
     }
     this.saveDecks(decks);
   },
 
-  deleteDeck(themeName) {
-    const decks = this.getDecks().filter((d) => d.theme !== themeName);
+  deleteDeck(title) {
+    const decks = this.getDecks().filter((d) => d.title !== title);
     this.saveDecks(decks);
   },
 
-  getDeck(themeName) {
+  getDeck(title) {
     const decks = this.getDecks();
-    return decks.find((d) => d.theme === themeName);
+    return decks.find((d) => d.title === title);
   },
 };

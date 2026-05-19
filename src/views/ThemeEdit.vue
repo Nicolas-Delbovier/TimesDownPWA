@@ -13,7 +13,7 @@ onMounted(() => {
   if (props.title && props.title !== 'New') {
     const deck = deckService.getDeck(props.title);
     if (deck) {
-      themeName.value = deck.theme;
+      themeName.value = deck.title;
       wordsText.value = deck.words.join('\n');
       isNew.value = false;
     }
@@ -42,8 +42,10 @@ const saveTheme = () => {
   }
 
   deckService.saveDeck({
-    theme: themeName.value,
+    title: themeName.value,
     words: words,
+    use: true,
+    isUserGenerated: true,
   });
 
   emit('backToMenu');
