@@ -19,15 +19,14 @@ const backToMenu = () => {
 </script>
 
 <template>
-
-  <h1 v-if="state === 'menu'" class="text-3xl text-transparent text-center font-bold pt-5
-  w-fit h-fit mx-auto
-  bg-clip-text bg-gradient-to-r from-primary-color to-accent-color">
+  <h1
+    v-if="state === 'menu'"
+    class="text-3xl text-transparent text-center font-bold pt-5 w-fit h-fit mx-auto bg-clip-text bg-gradient-to-r from-primary-color to-accent-color"
+  >
     Time's Down
   </h1>
   <Menu v-if="state === 'menu'" @startGame="onStartGame"></Menu>
   <Game v-if="state === 'game'" :nbTeams="nbTeams" :words="words" @backToMenu="backToMenu"></Game>
-
 </template>
 
 <style scoped></style>

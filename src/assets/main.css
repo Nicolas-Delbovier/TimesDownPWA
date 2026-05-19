@@ -1,5 +1,5 @@
 /* In your main CSS file (e.g., styles.css) */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-text-color: #e9f2f3;
@@ -23,7 +23,7 @@ body {
   overscroll-behavior-y: contain;
 }
 
-#app{
+#app {
   height: 100vh;
   width: 80vw;
 }
