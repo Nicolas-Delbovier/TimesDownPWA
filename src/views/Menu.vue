@@ -1,6 +1,6 @@
 <script setup>
-import { ref, defineAsyncComponent } from 'vue';
-import jsonData from '../../data/data.json';
+import { ref, defineAsyncComponent, onMounted } from 'vue';
+import { deckService } from '../services/deckService';
 
 // Import components using defineAsyncComponent for potential performance benefits
 const NavBar = defineAsyncComponent(() => import('../components/NavBar.vue'));
@@ -10,13 +10,16 @@ const Play = defineAsyncComponent(() => import('./Play.vue'));
 const emit = defineEmits(['startGame']);
 
 const contentView = ref('play');
-const decks = ref(jsonData.decks);
-const selectedThemes = ref(
-  jsonData.decks.reduce((acc, deck) => {
+const decks = ref([]);
+const selectedThemes = ref({});
+
+onMounted(() => {
+  decks.value = deckService.getDecks();
+  selectedThemes.value = decks.value.reduce((acc, deck) => {
     acc[deck.theme] = true;
     return acc;
-  }, {})
-);
+  }, {});
+});
 const nbCardsToPlay = ref(30);
 const nbTeams = ref(2);
 
