@@ -47,7 +47,7 @@ const onClick = (menuView) => {
       class="h-full"
       :iconBackgroundClass="current === 'modifications' ? 'bg-primary-color' : ''"
       @click="onClick('modifications')"
-      imgSrc="/assets/modificationsMenuIcon.svg"
+      imgSrc="/assets/pen.svg"
       :width="width"
       :height="height"
       text="Modifier"

@@ -14,10 +14,12 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: [
-        'assets/modificationsMenuIcon.svg',
+        'assets/pen.svg',
         'assets/playMenuIcon.svg',
         'assets/themesMenuIcon.svg',
         'assets/home.svg',
+        'assets/check.svg',
+        'assets/plus.svg',
       ],
       manifest: {
         name: "Time's Down",

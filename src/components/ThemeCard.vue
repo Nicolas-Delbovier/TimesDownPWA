@@ -20,7 +20,7 @@ const emit = defineEmits(['useTheme']);
 
 const use = ref(props.isUsed);
 
-const shiftUse = () => {
+const toggleIsUsed = () => {
   use.value = !use.value;
   emit('useTheme', { theme: props.theme, use: use.value });
 };
@@ -30,20 +30,34 @@ const shiftUse = () => {
   <div
     id="theme-card"
     :class="{
-      'bg-primary-color/80 hover:bg-primary-color/60 active:bg-primary-color/60': use,
-      'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10': !use,
+      'bg-primary-color/80 active:bg-primary-color/60': use,
+      'bg-accent-color/20 active:bg-accent-color/10': !use,
     }"
-    class="flex flex-col items-center text-text-color cursor-pointer px-2 pt-2 pb-4 gap-2 rounded-2xl w-11/12"
-    @click="shiftUse"
+    class="grid grid-rows items-center text-text-color gap-4 rounded-2xl w-11/12"
   >
-    <span id="card-title" class="text-center text-lg font-medium">{{ theme }}</span>
-    <!-- <span>Nombres de mots : {{ numberWords }}</span> -->
-    <button
-      class="text-text-color cursor-pointer p-2 border-2 border-text-color rounded-4xl"
-      :class="{ 'bg-primary-color': use, 'bg-accent-color/10': !use }"
-    >
-      {{ use ? 'Sélectionné' : 'Non sélectionné' }}
-    </button>
+    <div id="content" class="mt-2">
+      <p id="card-title" class="text-center text-lg font-bold">{{ theme }}</p>
+    </div>
+
+    <div id="buttons" class="grid grid-cols-[1fr_1fr] items-center h-full border-t-2">
+      <button
+        class="cursor-pointer flex justify-center items-center h-full py-2"
+        @click="toggleIsUsed"
+      >
+        <img
+          alt="Check Icon"
+          src="/assets/check.svg"
+          class="brightness-0 invert"
+          width="20"
+          height="20"
+        />
+      </button>
+      <button
+        class="cursor-pointer border-l-2 border-text-color flex justify-center items-center h-full py-2"
+      >
+        <img alt="Pen Icon" src="/assets/pen.svg" width="20" height="20" />
+      </button>
+    </div>
   </div>
 </template>
 
