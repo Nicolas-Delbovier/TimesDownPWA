@@ -45,8 +45,8 @@ const toggleIsUsed = () => {
         @click="toggleIsUsed"
       >
         <img
-          alt="Check Icon"
-          src="/assets/check.svg"
+          alt="Is Selected Icon"
+          :src="isUsed ? '/assets/check.svg' : '/assets/x.svg'"
           class="brightness-0 invert"
           width="20"
           height="20"

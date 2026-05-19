@@ -20,6 +20,7 @@ export default defineConfig({
         'assets/home.svg',
         'assets/check.svg',
         'assets/plus.svg',
+        'assets/x.svg',
       ],
       manifest: {
         name: "Time's Down",
