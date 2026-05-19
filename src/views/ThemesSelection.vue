@@ -6,7 +6,7 @@ const emit = defineEmits(['useTheme']);
 </script>
 
 <template>
-  <div id="themes-selection-menu" class="flex flex-col items-center gap-5">
+  <div id="themes-selection-menu" class="flex flex-col items-center gap-5 mt-5">
     <ThemeCard
       v-for="deck in decks"
       :key="deck.theme"
@@ -15,10 +15,18 @@ const emit = defineEmits(['useTheme']);
       :numberWords="deck.words.length"
       :isUsed="selectedThemes[deck.theme]"
     />
+
     <button
-      class="border border-dashed border-2 flex flex-col items-center text-text-color cursor-pointer px-2 pt-2 pb-4 gap-2 rounded-2xl w-11/12"
+      class="border-2 border-dashed border-text-color grid grid-rows-[1fr_auto] justify-items-center items-center text-text-color cursor-pointer p-4 rounded-2xl w-11/12 gap-2"
     >
-      Nouveau Thème
+      <p class="text-center text-lg font-bold">Nouveau Thème</p>
+      <img
+        alt="Plus Icon"
+        src="/assets/plus.svg"
+        width="30"
+        height="30"
+        class="brightness-0 invert"
+      />
     </button>
   </div>
 </template>
