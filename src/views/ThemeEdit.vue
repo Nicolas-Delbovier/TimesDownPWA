@@ -1,18 +1,112 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { deckService } from '../services/deckService';
 
 const emit = defineEmits(['backToMenu']);
 const props = defineProps(['title']);
 
+const themeName = ref('');
+const wordsText = ref('');
+const isNew = ref(true);
+
+onMounted(() => {
+  if (props.title && props.title !== 'New') {
+    const deck = deckService.getDeck(props.title);
+    if (deck) {
+      themeName.value = deck.theme;
+      wordsText.value = deck.words.join('\n');
+      isNew.value = false;
+    }
+  }
+});
+
+const saveTheme = () => {
+  if (!themeName.value.trim()) {
+    alert('Please enter a theme name');
+    return;
+  }
+
+  const words = wordsText.value
+    .split('\n')
+    .map((w) => w.trim())
+    .filter((w) => w.length > 0);
+
+  if (words.length === 0) {
+    alert('Please add at least one word');
+    return;
+  }
+
+  // If we renamed an existing theme, we should delete the old one first
+  if (!isNew.value && props.title !== themeName.value) {
+    deckService.deleteDeck(props.title);
+  }
+
+  deckService.saveDeck({
+    theme: themeName.value,
+    words: words,
+  });
+
+  emit('backToMenu');
+};
+
+const deleteTheme = () => {
+  if (confirm(`Are you sure you want to delete the theme "${props.title}"?`)) {
+    deckService.deleteDeck(props.title);
+    emit('backToMenu');
+  }
+};
+
 const backToMenu = () => {
-  emit('backToMenu', null);
+  emit('backToMenu');
 };
 </script>
 
 <template>
-  <div id="edit-theme">
-    <p>{{ title }}</p>
-    <button @click="backToMenu">Back to menu</button>
+  <div id="edit-theme" class="p-6 flex flex-col gap-6 max-w-2xl mx-auto w-full">
+    <div class="flex justify-between items-center">
+      <h2 class="text-2xl font-bold text-text-color">
+        {{ isNew ? 'Nouveau Thème' : 'Modifier Thème' }}
+      </h2>
+      <button @click="backToMenu" class="text-accent-color font-semibold">Annuler</button>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="theme-name" class="text-text-color font-semibold">Nom du thème</label>
+      <input
+        id="theme-name"
+        v-model="themeName"
+        type="text"
+        placeholder="Ex: Super Héros"
+        class="p-3 rounded-xl bg-accent-color/10 border-2 border-accent-color/20 text-text-color focus:border-primary-color outline-none"
+      />
+    </div>
+
+    <div class="flex flex-col gap-2 flex-grow">
+      <label for="theme-words" class="text-text-color font-semibold">Mots (un par ligne)</label>
+      <textarea
+        id="theme-words"
+        v-model="wordsText"
+        placeholder="Entrez vos mots ici..."
+        class="p-3 rounded-xl bg-accent-color/10 border-2 border-accent-color/20 text-text-color focus:border-primary-color outline-none h-64 resize-none"
+      ></textarea>
+    </div>
+
+    <div class="flex flex-col gap-3 mt-4">
+      <button
+        @click="saveTheme"
+        class="bg-primary-color text-white py-4 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-transform"
+      >
+        Sauvegarder
+      </button>
+
+      <button
+        v-if="!isNew"
+        @click="deleteTheme"
+        class="text-red-500 py-2 font-semibold active:opacity-70"
+      >
+        Supprimer ce thème
+      </button>
+    </div>
   </div>
 </template>
 
