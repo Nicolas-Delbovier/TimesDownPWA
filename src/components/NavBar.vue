@@ -26,7 +26,7 @@ const onClick = (menuView) => {
 <template>
   <div id="nav-bar" class="bg-background-color flex flex-row justify-between items-center py-4">
     <NavBarItem
-      class="h-full"
+      class="h-full flex-1/2"
       :iconBackgroundClass="current === 'play' ? 'bg-primary-color' : ''"
       @click="onClick('play')"
       imgSrc="/assets/playMenuIcon.svg"
@@ -35,22 +35,13 @@ const onClick = (menuView) => {
       text="Jouer"
     />
     <NavBarItem
-      class="h-full"
+      class="h-full flex-1/2"
       :iconBackgroundClass="current === 'themes' ? 'bg-primary-color' : ''"
       @click="onClick('themes')"
       imgSrc="/assets/themesMenuIcon.svg"
       :width="width"
       :height="height"
       text="Thèmes"
-    />
-    <NavBarItem
-      class="h-full"
-      :iconBackgroundClass="current === 'modifications' ? 'bg-primary-color' : ''"
-      @click="onClick('modifications')"
-      imgSrc="/assets/pen.svg"
-      :width="width"
-      :height="height"
-      text="Modifier"
     />
   </div>
 </template>

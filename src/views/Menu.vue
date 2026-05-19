@@ -5,7 +5,6 @@ import jsonData from '../../data/data.json';
 // Import components using defineAsyncComponent for potential performance benefits
 const NavBar = defineAsyncComponent(() => import('../components/NavBar.vue'));
 const ThemesSelection = defineAsyncComponent(() => import('./ThemesSelection.vue'));
-const Modifications = defineAsyncComponent(() => import('./Modifications.vue'));
 const Play = defineAsyncComponent(() => import('./Play.vue'));
 
 const emit = defineEmits(['startGame']);
@@ -65,10 +64,6 @@ const updateSelectedThemes = (message) => {
       v-if="contentView === 'themes'"
       :decks="decks"
       :selectedThemes="selectedThemes"
-      class="no-scrollbar w-full overflow-y-scroll"
-    />
-    <Modifications
-      v-if="contentView === 'modifications'"
       class="no-scrollbar w-full overflow-y-scroll"
     />
   </div>
