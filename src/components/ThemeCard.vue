@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 
 const props = defineProps({
   theme: {
@@ -17,6 +17,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['useTheme']);
+
+const triggerEditTheme = inject('triggerEditTheme');
 
 const use = ref(props.isUsed);
 
@@ -54,6 +56,7 @@ const toggleIsUsed = () => {
       </button>
       <button
         class="cursor-pointer border-l-2 border-text-color flex justify-center items-center h-full py-2"
+        @click="triggerEditTheme(theme)"
       >
         <img alt="Pen Icon" src="/assets/pen.svg" width="20" height="20" />
       </button>

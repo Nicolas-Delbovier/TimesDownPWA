@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, provide } from 'vue';
 import Menu from './views/Menu.vue';
 import Game from './views/Game.vue';
+import ThemeEdit from './views/ThemeEdit.vue';
 
 const state = ref('menu');
 const nbTeams = ref(2);
 const words = ref([]);
+const themeToEdit = ref('');
 
 const onStartGame = (message) => {
   nbTeams.value = message.nbTeams;
@@ -16,6 +18,12 @@ const onStartGame = (message) => {
 const backToMenu = () => {
   state.value = 'menu';
 };
+
+const onEditTheme = (event) => {
+  state.value = 'editTheme';
+  themeToEdit.value = event;
+};
+provide('triggerEditTheme', onEditTheme);
 </script>
 
 <template>
@@ -27,6 +35,7 @@ const backToMenu = () => {
   </h1>
   <Menu v-if="state === 'menu'" @startGame="onStartGame"></Menu>
   <Game v-if="state === 'game'" :nbTeams="nbTeams" :words="words" @backToMenu="backToMenu"></Game>
+  <ThemeEdit v-if="state === 'editTheme'" @backToMenu="backToMenu" :title="themeToEdit"></ThemeEdit>
 </template>
 
 <style scoped></style>
