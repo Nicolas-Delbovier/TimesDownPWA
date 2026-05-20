@@ -24,7 +24,7 @@ defineProps({
 </script>
 
 <template>
-  <button class="flex flex-col items-center justify-between gap-3">
+  <button class="btn btn-interactive flex flex-col items-center justify-between gap-3">
     <div class="rounded-4xl px-4 py-1" :class="iconBackgroundClass">
       <img alt="NavBar icon" :src="imgSrc" :width="width" :height="height" />
     </div>

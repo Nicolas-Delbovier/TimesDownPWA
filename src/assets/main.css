@@ -27,3 +27,29 @@ body {
   height: 100vh;
   width: 80vw;
 }
+
+@layer components {
+  /* Base button behavior */
+  .btn {
+    @apply cursor-pointer font-bold rounded-xl transition-all duration-100;
+  }
+
+  /* The magic rule for all colors */
+  .btn-interactive:not(:disabled):hover {
+    filter: brightness(0.9);
+  }
+
+  .btn-interactive:not(:disabled):active {
+    filter: brightness(0.8);
+    transform: scale(0.98);
+  }
+
+  /* Specific color variants */
+  .btn-primary {
+    @apply bg-primary-color text-text-color;
+  }
+
+  .btn-primary:disabled {
+    @apply bg-primary-color/20 cursor-not-allowed;
+  }
+}

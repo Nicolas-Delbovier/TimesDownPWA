@@ -131,11 +131,6 @@ const startNextTeamTurn = () => {
   state.value = 'inside-round';
 };
 
-const getPrimaryButtonClasses = (isDisabled) => ({
-  'bg-primary-color active:bg-primary-color/80': !isDisabled,
-  'bg-primary-color/20 active:bg-primary-color/10': isDisabled,
-});
-
 const backToMenu = () => {
   emit('backToMenu', null);
 };
@@ -170,11 +165,7 @@ onBeforeUnmount(() => {
         </span>
       </div>
 
-      <button
-        class="cursor-pointer font-bold py-6 px-18 rounded-xl mb-16"
-        :class="getPrimaryButtonClasses(false)"
-        @click="startRound"
-      >
+      <button class="btn btn-primary btn-interactive py-6 px-18 mb-16" @click="startRound">
         COMPRIS !
       </button>
     </template>
@@ -185,8 +176,7 @@ onBeforeUnmount(() => {
       </div>
       <button
         :disabled="isNextTeamButtonDisabled"
-        class="cursor-pointer font-bold py-6 px-18 rounded-xl mb-16"
-        :class="getPrimaryButtonClasses(isNextTeamButtonDisabled)"
+        class="btn btn-primary btn-interactive py-6 px-18 mb-16"
         @click="startNextTeamTurn"
       >
         Jouer
@@ -199,17 +189,10 @@ onBeforeUnmount(() => {
       </div>
       <div>{{ remainingTime }} secondes</div>
       <div id="action-buttons" class="flex flex-row gap-4 justify-evenly">
-        <button
-          class="cursor-pointer font-bold py-6 px-12 rounded-xl mb-16 bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10"
-          @click="skipWord"
-        >
+        <button class="btn btn-interactive py-6 px-12 mb-16 bg-accent-color/20" @click="skipWord">
           Passer
         </button>
-        <button
-          class="cursor-pointer font-bold py-6 px-12 rounded-xl mb-16"
-          :class="getPrimaryButtonClasses(false)"
-          @click="validateWord"
-        >
+        <button class="btn btn-primary btn-interactive py-6 px-12 mb-16" @click="validateWord">
           Valider
         </button>
       </div>
@@ -239,8 +222,7 @@ onBeforeUnmount(() => {
       <button
         v-if="round < 3"
         :disabled="isScoresButtonDisabled"
-        class="cursor-pointer font-bold py-6 px-18 rounded-xl mb-16"
-        :class="getPrimaryButtonClasses(isScoresButtonDisabled)"
+        class="btn btn-primary btn-interactive py-6 px-18 mb-16"
         @click="nextRound"
       >
         CONTINUER
@@ -249,8 +231,7 @@ onBeforeUnmount(() => {
       <button
         v-else
         :disabled="isScoresButtonDisabled"
-        class="cursor-pointer font-bold py-6 px-18 rounded-xl mb-16"
-        :class="getPrimaryButtonClasses(isScoresButtonDisabled)"
+        class="btn btn-primary btn-interactive py-6 px-18 mb-16"
         @click="backToMenu"
       >
         RETOUR AU MENU
