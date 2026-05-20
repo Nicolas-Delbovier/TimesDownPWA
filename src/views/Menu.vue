@@ -1,6 +1,7 @@
 <script setup>
 import { ref, defineAsyncComponent, onMounted } from 'vue';
 import { deckService } from '../services/deckService';
+import { gameService } from '../services/gameService';
 
 // Import components using defineAsyncComponent for potential performance benefits
 const NavBar = defineAsyncComponent(() => import('../components/NavBar.vue'));
@@ -28,27 +29,10 @@ const updateNbTeams = (message) => {
 };
 
 const startGame = () => {
-  let allWords = [];
-  for (const deck of decks.value) {
-    if (deck.use) {
-      allWords = allWords.concat(deck.words);
-    }
+  const words = gameService.prepareGameWords(decks.value, nbCardsToPlay.value);
+  if (words) {
+    emit('startGame', { words, nbTeams: nbTeams.value });
   }
-
-  if (allWords.length === 0) {
-    window.alert('Veuillez sélectionner au moins un thème avant de commencer le jeu.');
-    return;
-  }
-
-  if (allWords.length < nbCardsToPlay.value) {
-    window.alert(
-      `Le nombre de mots sélectionnés (${allWords.length}) est insuffisant pour le nombre de cartes choisi (${nbCardsToPlay.value}).`
-    );
-    return;
-  }
-
-  allWords.sort(() => 0.5 - Math.random());
-  emit('startGame', { words: allWords.slice(0, nbCardsToPlay.value), nbTeams: nbTeams.value });
 };
 
 const changeMenuView = (message) => {
