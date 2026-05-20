@@ -10,7 +10,7 @@ const state = ref('inter-round');
 const currentWords = ref([...props.words].sort(() => 0.5 - Math.random()));
 const currentWordIndex = ref(0);
 const currentTeam = ref(0);
-const scores = reactive(Array(4).fill(0));
+const scores = reactive(Array(props.nbTeams).fill(0));
 const remainingTime = ref(30);
 const TIME = 30;
 const DISABLED_BUTTON_DURATION_SEC = 2;
@@ -65,7 +65,6 @@ const showScores = () => {
 
 const skipWord = () => {
   currentWordIndex.value = (currentWordIndex.value + 1) % currentWords.value.length;
-  console.log(currentWords.value);
 };
 
 const validateWord = () => {
@@ -75,7 +74,6 @@ const validateWord = () => {
     currentWordIndex.value,
     Math.max(currentWords.value.length - 1, 0)
   );
-  console.log(currentWords.value);
 
   // When we are at the end of the round
   if (currentWords.value.length === 0) {
