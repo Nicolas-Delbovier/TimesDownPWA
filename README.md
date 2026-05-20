@@ -5,42 +5,46 @@
 This project is a PWA that implements the game **Time's Up** in French.
 
 <div style="overflow-x: auto; white-space: nowrap;">
-  <img src="public/img/screenshots/play_menu-portrait.png" alt="Play menu screenshot" width="300">
-  <img src="public/img/screenshots/themes_selection-portrait.png" alt="Themes selection menu screenshot" width="300">
-  <img src="public/img/screenshots/game-portrait.png" alt="Game screenshot" width="300">
-  <img src="public/img/screenshots/scores-portrait.png" alt="Scores screenshot" width="300">
+  <img src="public/img/screenshots/play_menu.png" alt="Play menu screenshot" width="300">
+  <img src="public/img/screenshots/themes_menu.png" alt="Themes selection menu screenshot" width="300">
+  <img src="public/img/screenshots/round_explanation.png" alt="Game screenshot" width="300">
+  <img src="public/img/screenshots/team_change.png" alt="Scores screenshot" width="300">
+  <img src="public/img/screenshots/in_game.png" alt="Scores screenshot" width="300">
 </div>
 
-## PWA Installation Guide
+## 📱 Installing as a PWA (Mobile)
 
-This application is built as a **Progressive Web App (PWA)**, which means you can install it directly onto your device, whether it's a phone or a computer. For development and testing purposes, the most straightforward installation method involves using **ngrok** and the **`serve` npm package**.
+To get the full "app" experience on your phone, you need to access the site over HTTPS. A great way to do this easily and for free is using **ngrok**.
 
-Here's how to install the PWA:
+### Mobile Access via ngrok
 
-1.  **Download ngrok:** Visit the [ngrok website](https://ngrok.com/) and follow their instructions to install it on your system.
-2.  **Install the `serve` package:** Open your command line or terminal and run `npm install -g serve`. The `-g` stands for "global," allowing you to use `serve` from any directory.
-3.  **Start the local server:** Navigate to the root folder of this project in your terminal. Then, run `npm run serve`. This command will start a local web server for the application.
-4.  **Expose your app online with ngrok:** In your terminal, run `ngrok http <port_number>`. Replace `<port_number>` with the port number that the `npm run serve` command indicated (e.g., 3000, 5000). Ngrok will provide a temporary public URL for your application.
+1. **Install ngrok**: If you haven't already, [install ngrok](https://ngrok.com/download).
+2. **Build and preview**:
+   ```bash
+   npm run build
+   npm run preview
+   ```
+3. **Expose your local server**:
+   While your local preview server is running (by default on port 4173), run:
+   ```bash
+   ngrok http 4173
+   ```
+4. **Access on your phone**:
+   Open the HTTPS URL provided by ngrok (e.g., `https://xxxx-xxxx.ngrok-free.app`) on your mobile browser (Safari on iOS, Chrome on Android).
 
-Finally, open the URL provided by ngrok in your web browser. While viewing the application, go into your browser's settings or menu (often represented by three dots or lines) and look for an option like "Add to Home Screen," "Install app," or "Download app" to install the PWA.
+   _Tip: you can create a QR code from a website to fasten the connection to the random url on your mobile._
 
-### Phone
-
-<div style="overflow-x: auto; white-space: nowrap;">
-  <img src="public/img/screenshots/ngrok_visit_site.jpg" alt="Ngrok visit site screenshot" width="300">
-  <img src="public/img/screenshots/chrome_phone_3dots.jpg" alt="Chrome open settings menu screenshot" width="300">
-  <img src="public/img/screenshots/chrome_phone_add_to_home_screen.jpg" alt="Chrome add to home screen screenshot" width="300">
-</div>
+5. **Install**:
+   - **iOS**: Tap the "Share" button and select **"Add to Home Screen"**.
+   - **Android**: Tap the three dots menu and select **"Install App"** or **"Add to Home Screen"**.
+     If your phone does not prompt you to "install" but tries to make a simple shortcut to your home screen, refresh the page and try again.
 
 #### ⚠️ Known install issue ⚠️
 
-If your browser only offers to create a shortcut instead of prompting to install the PWA, ensure you have only one browser tab open with the ngrok link. Some in-app browsers, like the one in Facebook Messenger, might prevent proper PWA installation. If you opened the link this way, close that browser and open the ngrok link directly in your main browser (e.g., Chrome).
+If your browser does not show you the install instructions and only prompts you to add a shortcut to home screen, you can try the following:
 
-<img src="public/img/screenshots/facebook_browser_leave.jpg" alt="Leave Facebook browser screenshot" width="300">
-
-### Computer
-
-<img src="public/img/screenshots/computer_install.png" alt="Leave Facebook browser screenshot" width="300">
+- Close all other tabs containing a link to ngrok
+- Refresh the page and retry multiple times (for some reason, this might work after x attempts 🤷‍♂️)
 
 ## Version History
 
