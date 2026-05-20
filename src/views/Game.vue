@@ -11,12 +11,18 @@ const currentWords = ref([...props.words].sort(() => 0.5 - Math.random()));
 const currentWordIndex = ref(0);
 const currentTeam = ref(0);
 const scores = reactive(Array(props.nbTeams).fill(0));
-const remainingTime = ref(30);
+
+// Timer constants and state
 const TIME = 30;
-const DISABLED_BUTTON_DURATION_SEC = 2;
-const timeoutIds = ref([]);
+const remainingTime = ref(TIME);
+const timerId = ref(null); // Holds the reference to our single active interval
+
+const DISABLED_BUTTON_DURATION_MS = 2000;
 const isNextTeamButtonDisabled = ref(true);
 const isScoresButtonDisabled = ref(true);
+
+// Keep timeouts only for the UI button debouncing, tracked cleanly
+const uiTimeoutIds = ref([]);
 
 const roundTypeLabel = computed(() => {
   switch (round.value) {
@@ -33,6 +39,14 @@ const winnerTeamIndex = computed(() => {
   return scores.indexOf(Math.max(...scores));
 });
 
+// Cleanly stops the countdown and resets the interval placeholder
+const stopTimer = () => {
+  if (timerId.value) {
+    clearInterval(timerId.value);
+    timerId.value = null;
+  }
+};
+
 const startRound = () => {
   showTeamTurn(false);
   currentWords.value = [...props.words].sort(() => 0.5 - Math.random());
@@ -46,12 +60,13 @@ const showTeamTurn = (nextTeam = true) => {
   isNextTeamButtonDisabled.value = true;
   const timeoutId = setTimeout(() => {
     isNextTeamButtonDisabled.value = false;
-  }, 1000 * DISABLED_BUTTON_DURATION_SEC);
+  }, DISABLED_BUTTON_DURATION_MS);
+  uiTimeoutIds.value.push(timeoutId);
 };
 
 const nextRound = () => {
   round.value++;
-  showTeamTurn(true); // team switch when there is a new round
+  showTeamTurn(true);
 };
 
 const showScores = () => {
@@ -59,8 +74,9 @@ const showScores = () => {
   state.value = 'scores';
   const timeoutId = setTimeout(
     () => (isScoresButtonDisabled.value = false),
-    1000 * DISABLED_BUTTON_DURATION_SEC
+    DISABLED_BUTTON_DURATION_MS
   );
+  uiTimeoutIds.value.push(timeoutId);
 };
 
 const skipWord = () => {
@@ -78,40 +94,36 @@ const validateWord = () => {
   // When we are at the end of the round
   if (currentWords.value.length === 0) {
     currentWords.value = [...props.words];
+    stopTimer(); // Turn off the timer since the round ended early!
     showScores();
-
-    // Clear timeouts to reset timer for next round
-    timeoutIds.value.forEach(clearTimeout);
-    timeoutIds.value = [];
     remainingTime.value = TIME;
   }
 };
 
 const startTimer = () => {
+  // Ensure any lingering timer is cleared before starting a new one
+  stopTimer();
+  remainingTime.value = TIME;
+
   const timerStartRound = round.value;
-  const nbSeconds = TIME;
 
-  const timeoutId1 = setTimeout(() => {
-    // Only trigger team change if no team has won this round
-    if (timerStartRound === round.value) {
-      currentTeam.value = (currentTeam.value + 1) % props.nbTeams;
-      currentWordIndex.value = (currentWordIndex.value + 1) % currentWords.value.length;
-      showTeamTurn(false);
+  timerId.value = setInterval(() => {
+    remainingTime.value--;
+
+    if (remainingTime.value <= 0) {
+      stopTimer();
+
+      // Only trigger team change if the round hasn't changed mid-way
+      // TODO: ensure this code is still usefull ?
+      if (timerStartRound === round.value) {
+        currentTeam.value = (currentTeam.value + 1) % props.nbTeams;
+        currentWordIndex.value = (currentWordIndex.value + 1) % currentWords.value.length;
+        showTeamTurn(false);
+      }
+
+      remainingTime.value = TIME;
     }
-    remainingTime.value = 30;
-  }, nbSeconds * 1000);
-  timeoutIds.value.push(timeoutId1);
-
-  // Update the remaining time info every second
-  for (let i = 0; i < nbSeconds; i++) {
-    const timeoutId2 = setTimeout(
-      () => {
-        remainingTime.value--;
-      },
-      1000 * (i + 1)
-    );
-    timeoutIds.value.push(timeoutId2);
-  }
+  }, 1000);
 };
 
 const startNextTeamTurn = () => {
@@ -123,8 +135,10 @@ const backToMenu = () => {
   emit('backToMenu', null);
 };
 
+// Lifecycle cleanup
 onBeforeUnmount(() => {
-  timeoutIds.value.forEach(clearTimeout);
+  stopTimer();
+  uiTimeoutIds.value.forEach(clearTimeout);
 });
 </script>
 
