@@ -34,6 +34,12 @@ const startGame = () => {
       allWords = allWords.concat(deck.words);
     }
   }
+
+  if (allWords.length === 0) {
+    window.alert('Veuillez sélectionner au moins un thème avant de commencer le jeu.');
+    return;
+  }
+
   allWords.sort(() => 0.5 - Math.random());
   emit('startGame', { words: allWords.slice(0, nbCardsToPlay.value), nbTeams: nbTeams.value });
 };
