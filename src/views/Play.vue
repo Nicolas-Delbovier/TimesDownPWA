@@ -38,7 +38,7 @@ watch(
 </script>
 
 <template>
-  <div class="play-menu flex flex-col items-center justify-between gap-5 flex-grow mt-15">
+  <div class="flex flex-col items-center justify-between gap-5 flex-grow my-10">
     <div class="flex flex-col items-center justify-center gap-5 w-full">
       <h3 class="text-text-color font-bold">Nombre de cartes</h3>
       <div class="flex flex-row justify-between w-full">
