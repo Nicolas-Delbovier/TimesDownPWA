@@ -40,6 +40,13 @@ const startGame = () => {
     return;
   }
 
+  if (allWords.length < nbCardsToPlay.value) {
+    window.alert(
+      `Le nombre de mots sélectionnés (${allWords.length}) est insuffisant pour le nombre de cartes choisi (${nbCardsToPlay.value}).`
+    );
+    return;
+  }
+
   allWords.sort(() => 0.5 - Math.random());
   emit('startGame', { words: allWords.slice(0, nbCardsToPlay.value), nbTeams: nbTeams.value });
 };
