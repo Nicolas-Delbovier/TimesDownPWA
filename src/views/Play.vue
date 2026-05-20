@@ -43,40 +43,13 @@ watch(
       <h3 class="text-text-color font-bold">Nombre de cartes</h3>
       <div class="flex flex-row justify-between w-full">
         <button
-          @click="updateNbCards(15)"
-          :class="{
-            'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80':
-              localNbCards === 15,
-            'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10':
-              localNbCards !== 15,
-          }"
-          class="text-text-color cursor-pointer w-20 h-10 rounded-4xl"
+          v-for="nb in [15, 30, 45]"
+          :key="nb"
+          @click="updateNbCards(nb)"
+          class="btn btn-interactive text-text-color w-20 h-10 rounded-4xl"
+          :class="localNbCards === nb ? 'btn-primary' : 'bg-accent-color/20'"
         >
-          15
-        </button>
-        <button
-          @click="updateNbCards(30)"
-          :class="{
-            'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80':
-              localNbCards === 30,
-            'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10':
-              localNbCards !== 30,
-          }"
-          class="text-text-color cursor-pointer w-20 h-10 rounded-4xl"
-        >
-          30
-        </button>
-        <button
-          @click="updateNbCards(45)"
-          :class="{
-            'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80':
-              localNbCards === 45,
-            'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10':
-              localNbCards !== 45,
-          }"
-          class="text-text-color cursor-pointer w-20 h-10 rounded-4xl"
-        >
-          45
+          {{ nb }}
         </button>
       </div>
     </div>
@@ -84,46 +57,19 @@ watch(
       <h3 class="text-text-color font-bold">Nombre d'équipes</h3>
       <div class="flex flex-row justify-between w-full">
         <button
-          @click="updateNbTeams(2)"
-          :class="{
-            'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80':
-              localNbTeams === 2,
-            'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10':
-              localNbTeams !== 2,
-          }"
-          class="text-text-color cursor-pointer w-20 h-10 rounded-4xl"
+          v-for="nb in [2, 3, 4]"
+          :key="nb"
+          @click="updateNbTeams(nb)"
+          class="btn btn-interactive text-text-color w-20 h-10 rounded-4xl"
+          :class="localNbTeams === nb ? 'btn-primary' : 'bg-accent-color/20'"
         >
-          2
-        </button>
-        <button
-          @click="updateNbTeams(3)"
-          :class="{
-            'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80':
-              localNbTeams === 3,
-            'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10':
-              localNbTeams !== 3,
-          }"
-          class="text-text-color cursor-pointer w-20 h-10 rounded-4xl"
-        >
-          3
-        </button>
-        <button
-          @click="updateNbTeams(4)"
-          :class="{
-            'bg-primary-color hover:bg-primary-color/80 active:bg-primary-color/80':
-              localNbTeams === 4,
-            'bg-accent-color/20 hover:bg-accent-color/10 active:bg-accent-color/10':
-              localNbTeams !== 4,
-          }"
-          class="text-text-color cursor-pointer w-20 h-10 rounded-4xl"
-        >
-          4
+          {{ nb }}
         </button>
       </div>
     </div>
 
     <button
-      class="bg-primary-color text-text-color hover:bg-primary-color/80 active:bg-primary-color/80 cursor-pointer font-bold py-6 px-18 rounded-xl"
+      class="btn btn-primary btn-interactive py-6 px-18"
       id="start-game-button"
       @click="emitPressPlayMessage"
     >
