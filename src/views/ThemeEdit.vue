@@ -69,7 +69,7 @@ const backToMenu = () => {
       <h2 class="text-2xl font-bold text-text-color">
         {{ isNew ? 'Nouveau Thème' : 'Modifier Thème' }}
       </h2>
-      <button @click="backToMenu" class="text-accent-color font-semibold">Annuler</button>
+      <button @click="backToMenu" class="btn btn-interactive btn-secondary p-2">Annuler</button>
     </div>
 
     <div class="flex flex-col gap-2">
@@ -94,18 +94,9 @@ const backToMenu = () => {
     </div>
 
     <div class="flex flex-col gap-3 mt-4">
-      <button
-        @click="saveTheme"
-        class="bg-primary-color text-white py-4 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-transform"
-      >
-        Sauvegarder
-      </button>
+      <button @click="saveTheme" class="btn btn-interactive btn-primary py-4">Sauvegarder</button>
 
-      <button
-        v-if="!isNew"
-        @click="deleteTheme"
-        class="text-red-500 py-2 font-semibold active:opacity-70"
-      >
+      <button v-if="!isNew" @click="deleteTheme" class="btn btn-interactive btn-secondary py-4">
         Supprimer ce thème
       </button>
     </div>
