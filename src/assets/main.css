@@ -49,6 +49,10 @@ body {
     @apply bg-primary-color text-text-color;
   }
 
+  .btn-secondary {
+    @apply border-2 border-text-color text-text-color;
+  }
+
   .btn-primary:disabled {
     @apply bg-primary-color/20 cursor-not-allowed;
   }
