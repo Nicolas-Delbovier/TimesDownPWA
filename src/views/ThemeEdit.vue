@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { deckService } from '../services/deckService';
+import Modal from '../components/Modal.vue';
 
 const emit = defineEmits(['backToMenu']);
 const props = defineProps(['title']);
@@ -8,6 +9,10 @@ const props = defineProps(['title']);
 const themeName = ref('');
 const wordsText = ref('');
 const isNew = ref(true);
+
+const showDeleteConfirm = ref(false);
+const showValidationAlert = ref(false);
+const validationMessage = ref('');
 
 onMounted(() => {
   if (props.title && props.title !== 'New') {
@@ -22,7 +27,8 @@ onMounted(() => {
 
 const saveTheme = () => {
   if (!themeName.value.trim()) {
-    alert('Please enter a theme name');
+    validationMessage.value = 'Veuillez entrer un nom de thème.';
+    showValidationAlert.value = true;
     return;
   }
 
@@ -32,7 +38,8 @@ const saveTheme = () => {
     .filter((w) => w.length > 0);
 
   if (words.length === 0) {
-    alert('Please add at least one word');
+    validationMessage.value = 'Veuillez ajouter au moins un mot.';
+    showValidationAlert.value = true;
     return;
   }
 
@@ -52,10 +59,12 @@ const saveTheme = () => {
 };
 
 const deleteTheme = () => {
-  if (confirm(`Are you sure you want to delete the theme "${props.title}"?`)) {
-    deckService.deleteDeck(props.title);
-    emit('backToMenu');
-  }
+  showDeleteConfirm.value = true;
+};
+
+const handleDeleteConfirmed = () => {
+  deckService.deleteDeck(props.title);
+  emit('backToMenu');
 };
 
 const backToMenu = () => {
@@ -100,6 +109,21 @@ const backToMenu = () => {
         Supprimer ce thème
       </button>
     </div>
+
+    <Modal
+      :isVisible="showDeleteConfirm"
+      @update:isVisible="showDeleteConfirm = $event"
+      :type="'confirm'"
+      :message="`Êtes-vous sûr de vouloir supprimer le thème '${props.title}' ?`"
+      @confirmed="handleDeleteConfirmed"
+    />
+
+    <Modal
+      :isVisible="showValidationAlert"
+      @update:isVisible="showValidationAlert = $event"
+      :type="'alert'"
+      :message="validationMessage"
+    />
   </div>
 </template>
 
