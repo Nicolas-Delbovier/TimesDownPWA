@@ -2,6 +2,7 @@
 import { ref, defineAsyncComponent, onMounted } from 'vue';
 import { deckService } from '../services/deckService';
 import { gameService } from '../services/gameService';
+import Modal from '../components/Modal.vue';
 
 // Import components using defineAsyncComponent for potential performance benefits
 const NavBar = defineAsyncComponent(() => import('../components/NavBar.vue'));
@@ -12,6 +13,9 @@ const emit = defineEmits(['startGame']);
 
 const contentView = ref('play');
 const decks = ref([]);
+
+const showValidationAlert = ref(false);
+const alertMessage = ref('');
 
 onMounted(() => {
   decks.value = deckService.getDecks();
@@ -29,9 +33,12 @@ const updateNbTeams = (message) => {
 };
 
 const startGame = () => {
-  const words = gameService.prepareGameWords(decks.value, nbCardsToPlay.value);
-  if (words) {
-    emit('startGame', { words, nbTeams: nbTeams.value });
+  const result = gameService.prepareGameWords(decks.value, nbCardsToPlay.value);
+  if (!result.success) {
+    alertMessage.value = result.message;
+    showValidationAlert.value = true;
+  } else {
+    emit('startGame', { words: result.words, nbTeams: nbTeams.value });
   }
 };
 
@@ -67,6 +74,13 @@ const updateSelectedThemes = (message) => {
     />
   </div>
   <NavBar @menuViewChange="changeMenuView" height="25" width="25" />
+
+  <Modal
+    :isVisible="showValidationAlert"
+    @update:isVisible="showValidationAlert = $event"
+    :type="'alert'"
+    :message="alertMessage"
+  />
 </template>
 
 <style scoped></style>
