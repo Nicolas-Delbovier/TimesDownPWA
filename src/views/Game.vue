@@ -39,6 +39,10 @@ const winnerTeamIndex = computed(() => {
   return scores.indexOf(Math.max(...scores));
 });
 
+const progressBarWidth = computed(() => {
+  return (remainingTime.value / TIME) * 100;
+});
+
 // Cleanly stops the countdown and resets the interval placeholder
 const stopTimer = () => {
   if (timerId.value) {
@@ -187,7 +191,17 @@ onBeforeUnmount(() => {
       <div id="current-word" class="bg-accent-color/60 font-medium py-12 px-18 rounded-xl">
         {{ currentWords[currentWordIndex] }}
       </div>
-      <div>{{ remainingTime }} secondes</div>
+
+      <div class="w-full px-8 flex flex-col items-center gap-4">
+        <div class="w-full bg-accent-color/20 h-4 rounded-full overflow-hidden">
+          <div
+            class="bg-primary-color h-full rounded-full transition-all duration-1000 ease-linear"
+            :style="{ width: progressBarWidth + '%' }"
+          ></div>
+        </div>
+        <div class="font-medium text-lg">{{ remainingTime }} secondes</div>
+      </div>
+
       <div id="action-buttons" class="flex flex-row gap-4 justify-evenly">
         <button class="btn btn-interactive py-6 px-12 mb-16 bg-accent-color/20" @click="skipWord">
           Passer
