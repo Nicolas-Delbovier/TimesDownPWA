@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.0] - 2026-05-21
+
+### Added
+
+- **Progress Bar:** A progress bar is now showed in-game alongside the remaining number of seconds.
+- **Better Integrated Pop-up's:** Replace default browser pop-up's with custom pop-up component.
+
 ## [1.1.0] - 2026-05-20
 
 ### Added
