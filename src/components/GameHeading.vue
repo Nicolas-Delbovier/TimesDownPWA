@@ -1,4 +1,7 @@
 <script setup>
+import { ref } from 'vue';
+import Modal from './Modal.vue'; // Import your new modal component
+
 defineProps({
   round: {
     type: Number,
@@ -12,10 +15,14 @@ defineProps({
 
 const emit = defineEmits(['homeBtnClick']);
 
+const showHomeConfirm = ref(false);
+
 const onHomeClick = () => {
-  if (confirm('Retourner au menu ?')) {
-    emit('homeBtnClick', null);
-  }
+  showHomeConfirm.value = true; // Show the custom confirmation modal
+};
+
+const handleHomeConfirmed = () => {
+  emit('homeBtnClick', null);
 };
 </script>
 
@@ -32,6 +39,14 @@ const onHomeClick = () => {
       <span class="font-medium text-3xl"> Manche {{ round }} </span>
       <span class="mt-1"> ({{ roundTypeLabel }}) </span>
     </div>
+
+    <Modal
+      :isVisible="showHomeConfirm"
+      @update:isVisible="showHomeConfirm = $event"
+      :type="'confirm'"
+      message="Retourner au menu ?"
+      @confirmed="handleHomeConfirmed"
+    />
   </div>
 </template>
 
